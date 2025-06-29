@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 MLX_FLAGS = -lmlx -lXext -lX11
 
-SRCS = cube.c
+SRCS = cube.c gc.c
 
 OBJS = $(SRCS:.c=.o)
 
