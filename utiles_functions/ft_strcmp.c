@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 10:41:06 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/10/24 10:53:34 by zoentifi         ###   ########.fr       */
+/*   Created: 2025/06/29 16:46:47 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/06/29 16:55:24 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
-size_t	ft_strlen(const char *s)
+int ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (!s1 || !s2)
+		return (-1);
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

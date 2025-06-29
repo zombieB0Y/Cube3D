@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 17:28:25 by zoentifi         ###   ########.fr       */
+/*   Created: 2024/10/24 10:41:06 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/06/29 16:55:20 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
-t_Cube  *cube(void)
+size_t	ft_strlen(const char *s)
 {
-	static t_Cube instance;
+	size_t	i;
 
-	return (&instance);
-}
-
-int main(int ac, char **av)
-{
-	if (validate_args(ac, av))
-		return (1);
-	// read_file(av[1]);
-	return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

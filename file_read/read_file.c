@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.c                                             :+:      :+:    :+:   */
+/*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 17:28:25 by zoentifi         ###   ########.fr       */
+/*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/06/29 17:29:25 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
-t_Cube  *cube(void)
+
+void    read_file(char *file_name)
 {
-	static t_Cube instance;
-
-	return (&instance);
-}
-
-int main(int ac, char **av)
-{
-	if (validate_args(ac, av))
-		return (1);
-	// read_file(av[1]);
-	return (0);
+    open(file_name, O_RDONLY);   
 }

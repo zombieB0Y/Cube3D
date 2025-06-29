@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.c                                             :+:      :+:    :+:   */
+/*   __arg__.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 17:28:25 by zoentifi         ###   ########.fr       */
+/*   Created: 2025/06/29 17:08:29 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/06/29 17:09:46 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
-t_Cube  *cube(void)
+int	validate_args(int ac, char **av)
 {
-	static t_Cube instance;
-
-	return (&instance);
-}
-
-int main(int ac, char **av)
-{
-	if (validate_args(ac, av))
+	if (ac != 2)
+	{
+		ft_putstr_fd("Error: invalid number of arguments\n", 2);
 		return (1);
-	// read_file(av[1]);
+	}
+	if (ft_strlen(av[1]) < 4 || ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
+	{
+		ft_putstr_fd("Error: invalid file extension\n", 2);
+		return (1);
+	}
 	return (0);
 }
