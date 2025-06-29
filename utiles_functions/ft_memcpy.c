@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:19:23 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/11/06 16:39:25 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:59:48 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -30,9 +30,3 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
-/*
-int	main(void)
-{
-	char s[] = "abcs";
-	memcpy(s, "aaa", 10);
-}*/

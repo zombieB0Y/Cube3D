@@ -8,7 +8,8 @@ MLX_FLAGS = -lmlx -lXext -lX11
 
 SRCS = cube.c gc.c $(UTILES) $(ARGS_VALIDAT) $(FILE_READ)
 
-UTILES = utiles_functions/ft_strlen.c utiles_functions/ft_strcmp.c utiles_functions/ft_putstr_fd.c
+UTILES = utiles_functions/ft_strlen.c utiles_functions/ft_strcmp.c utiles_functions/ft_putstr_fd.c \
+		utiles_functions/ft_realloc.c utiles_functions/ft_memcpy.c
 
 ARGS_VALIDAT = argument_validation/__arg__.c
 

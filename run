@@ -1,0 +1,1 @@
+make re && make clean && valgrind --leak-check=full ./cube3D $1

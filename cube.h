@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 17:29:06 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:00:11 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	gc_collect(void);
 size_t	ft_strlen(const char *s);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_putstr_fd(char *s, int fd);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 // Argument validation
 int		validate_args(int ac, char **av);
