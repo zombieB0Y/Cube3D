@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 16:10:35 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:45:16 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ int main(int ac, char **av)
         write(2, "Error: invalid file extension\n", 31);
         return (1);
     }
+    return (0);
 }
