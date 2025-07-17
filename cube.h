@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/17 15:53:42 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:15:56 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef enum e_texture_type
 typedef struct s_texture
 {
 	char			*path;
+	int				width;
+	int				height;
 	t_texture_type	type;
 	bool			loaded;
 }			t_texture;
@@ -64,6 +66,7 @@ typedef struct s_Cube
 {
 	t_GCNode	*g_head;
 	t_parse		*parse;
+	void		*mlx;
 }				t_Cube;
 
 t_Cube  *cube(void);
@@ -82,13 +85,18 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 char	*ft_strdup(const char *s1);
 void	*ft_memset(void *s, int c, size_t n);
 bool	ft_isspace(char c);
-bool	check_for_whitespace(char *line);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // Argument validation
 int		validate_args(int ac, char **av);
 
 // File reading
+bool	check_for_whitespace(char *line);
 void	read_file(char *file_name);
+void	load_textures(char *file_name);
+void	check_textures(void);
+bool	check_for_valid_texture(void);
+bool	check_each_texture(int id);
+// void	load_map(char *file_name, char **map);
 
 # endif

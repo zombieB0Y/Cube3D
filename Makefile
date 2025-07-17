@@ -1,10 +1,10 @@
 NAME = cube3D
 
-CC = cc
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-MLX_FLAGS = -lmlx -lXext -lX11
+MLX_FLAGS = -I/usr/include -Imlx_linux -O3 -lX11 -lXext -lm -lz
 
 SRCS = cube.c gc.c $(UTILES) $(ARGS_VALIDAT) $(FILE_READ)
 
@@ -23,6 +23,9 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

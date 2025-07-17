@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/17 15:52:57 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:21:59 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,29 @@ void	load_map(char *file_name, char **map)
 	}
 }
 
+void	print_textures(t_texture *textures)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (textures[i].loaded)
+		{
+			ft_putstr_fd("Texture ", 1);
+			ft_putstr_fd(textures[i].path, 1);
+			ft_putstr_fd(" loaded successfully\n", 1);
+		}
+		else
+		{
+			ft_putstr_fd("Texture not loaded\n", 2);
+		}
+	}
+}
+
 void    read_file(char *file_name)
 {
 	char 	**map;
 
 	map = NULL;
+	(void)map;
 	cube()->parse = gc_malloc(sizeof(t_parse));
 	if (!cube()->parse)
 	{
@@ -122,6 +140,17 @@ void    read_file(char *file_name)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	load_textures(file_name);	
-	load_map(file_name, map); // not right now, just a placeholder
+	load_textures(file_name);
+	if (!cube()->parse->textures[0].loaded ||
+		!cube()->parse->textures[1].loaded ||
+		!cube()->parse->textures[2].loaded ||
+		!cube()->parse->textures[3].loaded)
+	{
+		ft_putstr_fd("Error: Not all textures loaded\n", 2);
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	// print_textures(cube()->parse->textures);
+	check_textures();
+	// load_map(file_name, map); // not right now, just a placeholder
 }
