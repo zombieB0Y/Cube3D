@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:59:30 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/11/04 03:52:28 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:16:01 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s1)
 	size_t	len;
 
 	len = ft_strlen(s1);
-	dup = (char *)malloc((len + 1) * sizeof(char));
+	dup = (char *)gc_malloc((len + 1) * sizeof(char));
 	if (!dup)
 		return (NULL);
 	len = 0;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_line_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 01:16:01 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/12/22 01:16:05 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:57:05 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_line.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -24,7 +24,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		len1 = ft_strlen(s1);
 	if (s2)
 		len2 = ft_strlen(s2);
-	new_str = malloc(len1 + len2 + 1);
+	new_str = gc_malloc(len1 + len2 + 1);
 	if (!new_str)
 		return (NULL);
 	if (s1)
@@ -35,13 +35,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new_str);
 }
 
-char	*ft_realloc(char *old_str, char *append)
+static char	*ft_realloc1(char *old_str, char *append)
 {
 	char	*new_str;
 
 	new_str = ft_strjoin(old_str, append);
-	if (old_str)
-		free(old_str);
 	return (new_str);
 }
 
@@ -55,7 +53,7 @@ char	*read_from_buffer(t_buff *buff, char *line)
 	{
 		temp[0] = buff->buffer[buff->buffer_index];
 		buff->buffer_index++;
-		line = ft_realloc(line, temp);
+		line = ft_realloc1(line, temp);
 		if (!line)
 			return (NULL);
 		if (temp[0] == '\n')
@@ -68,40 +66,9 @@ int	init_buffer(t_buff *buff)
 {
 	if (!buff->buffer)
 	{
-		buff->buffer = malloc((size_t)BUFFER_SIZE);
+		buff->buffer = gc_malloc((size_t)BUFFER_SIZE);
 		if (!buff->buffer)
 			return (0);
 	}
 	return (1);
-}
-
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
-
-	if (!dst && !src)
-		return (NULL);
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	i = 0;
-	while (i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-	return (dst);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:48:28 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/12/16 15:48:30 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:10:50 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_line.h"
 
 char	*fill_line(t_buff *buff, char *line, int fd)
 {
@@ -24,11 +24,9 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 			{
 				if (buff->bytes_read == 0)
 				{
-					free(buff->buffer);
 					buff->buffer = NULL;
 					return (line);
 				}
-				free(line);
 				return (NULL);
 			}
 		}
@@ -51,26 +49,3 @@ char	*get_next_line(int fd)
     	return (NULL);
 	return (line);
 }
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("test", O_CREAT | O_RDWR);
-//   	line = get_next_line(fd);
-// 	printf("%s", line);
-//   	free(line);
-//   line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
-//   line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
-//   line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
-
-
-// 	close(fd);
-// 	return (0);
-// }

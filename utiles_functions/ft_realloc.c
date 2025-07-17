@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:58:33 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 17:58:54 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:04:12 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
     
     if (!ptr)
         return gc_malloc(new_size);
-    if (new_size == 0) {
-        free(ptr);
+    if (new_size == 0)
         return NULL;
-    }
     new_ptr = gc_malloc(new_size);
     if (!new_ptr)
         return NULL;
