@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-MLX_FLAGS = -I/usr/include -Imlx_linux -O3 -lX11 -lXext -lm -lz
+MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 SRCS = cube.c gc.c $(UTILES) $(ARGS_VALIDAT) $(FILE_READ)
 
@@ -17,15 +17,17 @@ FILE_READ = file_read/read_file.c file_read/read_file_utils.c
 
 GET_LINE = get_line/get_line.c get_line/get_line_utils.c
 
-OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o)
+PLAYER = player/drawing_player.c
+
+OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PLAYER:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
+# %.o: %.c
+# 	$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

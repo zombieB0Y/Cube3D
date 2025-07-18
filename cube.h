@@ -6,13 +6,14 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/17 17:15:56 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:22:58 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
 
+# include "minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -20,7 +21,6 @@
 # include <string.h>
 # include <math.h>
 # include <stdbool.h>
-# include "mlx.h"
 # include "get_line/get_line.h"
 
 typedef struct t_GCNode
@@ -36,6 +36,13 @@ typedef enum e_texture_type
 	TEXTURE_WEST,
 	TEXTURE_EAST
 }	t_texture_type;
+
+typedef struct s_player
+{
+    int x;
+    int y;
+    int size;
+}	t_player;
 
 typedef struct s_texture
 {
@@ -61,12 +68,22 @@ typedef struct s_parse
 	int					height;
 }						t_parse;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	int		win_width;
+	int		win_height;
+	void	*img;
+}				t_mlx;
+
 // our global cube instance
 typedef struct s_Cube
 {
 	t_GCNode	*g_head;
 	t_parse		*parse;
-	void		*mlx;
+	t_mlx		*mlx;
+	t_player	*player;
 }				t_Cube;
 
 t_Cube  *cube(void);
@@ -89,6 +106,12 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // Argument validation
 int		validate_args(int ac, char **av);
+
+// player drawing
+void	init_player(void);
+void	move_player(int dx, int dy);
+void	clear_player_area(int x, int y, int size);
+void	draw_player_at_position(void);
 
 // File reading
 bool	check_for_whitespace(char *line);

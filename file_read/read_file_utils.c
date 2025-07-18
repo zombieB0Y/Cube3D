@@ -24,7 +24,7 @@ void	check_textures(void)
 	}
 	if (!check_for_valid_texture())
 	{
-		ft_putstr_fd("Error: Invalid texture\n", 2);
+		ft_putstr_fd("Error: Invalid texture1\n", 2);
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
@@ -50,10 +50,8 @@ bool	check_each_texture(int id)
 			&cube()->parse->textures[id].width, &cube()->parse->textures[id].height);
 	if (!img)
 	{
-		img = mlx_png_file_to_image(cube()->mlx, cube()->parse->textures[id].path,
-			&cube()->parse->textures[id].width, &cube()->parse->textures[id].height);
-		if (!img)
-			return (false);
+		printf("Error: Texture %d not found: %s\n", id, cube()->parse->textures[id].path);
+		return (false);
 	}
 	gc_register(img);
 	return (true);
