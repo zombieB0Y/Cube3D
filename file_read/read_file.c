@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/18 15:47:42 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/19 12:26:28 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	load_textures(char *file_name)
 	}
 }
 
-void	load_map(char *file_name, char **map)
+char	**load_map(char *file_name, char **map)
 {
 	int		fd;
 	char	*line;
@@ -93,9 +93,21 @@ void	load_map(char *file_name, char **map)
 			gc_collect();
 			exit(EXIT_FAILURE);
 		}
+		ft_memset(line + ft_strlen(line) - 1, '\0', 1);
+		if (!*line)
+		{
+			// ft_putstr_fd("Error: Empty line in map\n", 2);
+			// gc_collect();
+			// exit(EXIT_FAILURE);
+			break ;
+		}
+		if (!cube()->parse->width)
+			cube()->parse->width = ft_strlen(line);
 		map[cube()->parse->height] = line;
 		cube()->parse->height++;
 	}
+	close(fd);
+	return (ft_putstr_fd("Map loaded successfully\n", 1), map);
 }
 
 void	print_textures(t_texture *textures)
@@ -127,30 +139,30 @@ void    read_file(char *file_name)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	cube()->parse->textures = gc_malloc(sizeof(t_texture) * 4);
-	ft_memset(cube()->parse->textures, 0, sizeof(t_texture) * 4);
-	if (!cube()->parse->textures)
-	{
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
-	cube()->parse->floor_ceiling = gc_malloc(sizeof(t_floor_ceiling));
-	if (!cube()->parse->floor_ceiling)
-	{
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
-	load_textures(file_name);
-	if (!cube()->parse->textures[0].loaded ||
-		!cube()->parse->textures[1].loaded ||
-		!cube()->parse->textures[2].loaded ||
-		!cube()->parse->textures[3].loaded)
-	{
-		ft_putstr_fd("Error: Not all textures loaded\n", 2);
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
+	// cube()->parse->textures = gc_malloc(sizeof(t_texture) * 4);
+	// ft_memset(cube()->parse->textures, 0, sizeof(t_texture) * 4);
+	// if (!cube()->parse->textures)
+	// {
+	// 	gc_collect();
+	// 	exit(EXIT_FAILURE);
+	// }
+	// cube()->parse->floor_ceiling = gc_malloc(sizeof(t_floor_ceiling));
+	// if (!cube()->parse->floor_ceiling)
+	// {
+	// 	gc_collect();
+	// 	exit(EXIT_FAILURE);
+	// }
+	// load_textures(file_name);
+	// if (!cube()->parse->textures[0].loaded ||
+	// 	!cube()->parse->textures[1].loaded ||
+	// 	!cube()->parse->textures[2].loaded ||
+	// 	!cube()->parse->textures[3].loaded)
+	// {
+	// 	ft_putstr_fd("Error: Not all textures loaded\n", 2);
+	// 	gc_collect();
+	// 	exit(EXIT_FAILURE);
+	// }
 	// print_textures(cube()->parse->textures);
 	// check_textures();
-	// load_map(file_name, map); // not right now, just a placeholder
+	cube()->parse->map = load_map(file_name, map);
 }

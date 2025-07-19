@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/18 16:22:58 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/19 11:02:41 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ void	init_player(void);
 void	move_player(int dx, int dy);
 void	clear_player_area(int x, int y, int size);
 void	draw_player_at_position(void);
+
+// map drawing
+void	draw_map(void);
+void	draw_tile(int x, int y, char tile);
+void	draw_rectangle(int x, int y, int width, int height, int color);
 
 // File reading
 bool	check_for_whitespace(char *line);

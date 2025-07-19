@@ -19,7 +19,9 @@ GET_LINE = get_line/get_line.c get_line/get_line_utils.c
 
 PLAYER = player/drawing_player.c
 
-OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PLAYER:.c=.o)
+MAP_UTILES = map_utils/drawing_map.c
+
+OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PLAYER:.c=.o) $(MAP_UTILES:.c=.o)
 
 all: $(NAME)
 
