@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/19 11:02:58 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:12:37 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int main(int ac, char **av)
 		ft_putstr_fd("Error: Failed to allocate memory for MLX\n", 2);
 		return (1);
 	}
-	cube()->mlx->win_width = 800;
-	cube()->mlx->win_height = 600;
+	cube()->mlx->win_width = 960;
+	cube()->mlx->win_height = 640;
 	cube()->mlx->mlx = mlx_init();
 	cube()->mlx->win = mlx_new_window(cube()->mlx->mlx,
 				cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");

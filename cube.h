@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/19 11:02:41 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:13:32 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,18 @@ typedef struct s_floor_ceiling
 	char		*ceiling_color;
 }			t_floor_ceiling;
 
+typedef struct s_map
+{
+	char		**map;
+	int			width;
+	int			height;
+}			t_map;
+
 typedef struct s_parse
 {
 	t_texture			*textures;
 	t_floor_ceiling		*floor_ceiling;
-	char				**map;
+	t_map				*map;
 	int					width;
 	int					height;
 }						t_parse;
@@ -103,6 +110,7 @@ char	*ft_strdup(const char *s1);
 void	*ft_memset(void *s, int c, size_t n);
 bool	ft_isspace(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		gcd(int a, int b);
 
 // Argument validation
 int		validate_args(int ac, char **av);

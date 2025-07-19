@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/19 12:26:28 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/19 14:16:13 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,11 @@ void    read_file(char *file_name)
 	// }
 	// print_textures(cube()->parse->textures);
 	// check_textures();
-	cube()->parse->map = load_map(file_name, map);
+	cube()->parse->map = gc_malloc(sizeof(t_map));
+	if (!cube()->parse->map)
+	{
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	cube()->parse->map->map = load_map(file_name, map);
 }

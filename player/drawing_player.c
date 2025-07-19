@@ -6,7 +6,7 @@ void	init_player(void)
 	if (!cube()->player)
 		return;
 	
-	cube()->player->size = 64;
+	cube()->player->size = 8;
 	cube()->player->x = cube()->mlx->win_width / 2 - cube()->player->size / 2;
 	cube()->player->y = cube()->mlx->win_height / 2 - cube()->player->size / 2;
 }
@@ -52,9 +52,9 @@ void	move_player(int dx, int dy)
 	clear_player_area(cube()->player->x, cube()->player->y, cube()->player->size);
 	new_x = cube()->player->x + dx;
 	new_y = cube()->player->y + dy;
-	if (new_x >= 0 && new_x + cube()->player->size <= cube()->mlx->win_width)
+	if (new_x >= 0 && new_x + cube()->player->size <= cube()->mlx->win_width + (cube()->mlx->win_width / cube()->parse->width))
 		cube()->player->x = new_x;
-	if (new_y >= 0 && new_y + cube()->player->size <= cube()->mlx->win_height)
+	if (new_y >= 0 && new_y + cube()->player->size <= cube()->mlx->win_height + (cube()->mlx->win_height * 0.01))
 		cube()->player->y = new_y;
 	draw_player_at_position();
 }
