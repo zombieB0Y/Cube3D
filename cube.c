@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/19 14:12:37 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:16:47 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	key_hook(int keycode)
 		ft_putstr_fd("Exiting...\n", 1);
         exit(0);
     }
-    if (keycode == 119 || keycode == 65362)
-        move_player(0, -10);
-    else if (keycode == 115 || keycode == 65364)
-        move_player(0, 10);
-    else if (keycode == 97 || keycode == 65361)
-        move_player(-10, 0);
-    else if (keycode == 100 || keycode == 65363)
-        move_player(10, 0);
+    // if (keycode == 119 || keycode == 65362)
+    //     move_player(0, -10);
+    // else if (keycode == 115 || keycode == 65364)
+    //     move_player(0, 10);
+    // else if (keycode == 97 || keycode == 65361)
+    //     move_player(-10, 0);
+    // else if (keycode == 100 || keycode == 65363)
+    //     move_player(10, 0);
     return (0);
 }
 
@@ -54,9 +54,10 @@ int main(int ac, char **av)
 	}
 	cube()->mlx->win_width = 960;
 	cube()->mlx->win_height = 640;
+	read_file(av[1]);
 	cube()->mlx->mlx = mlx_init();
 	cube()->mlx->win = mlx_new_window(cube()->mlx->mlx,
-				cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");
+	cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");
 	if (!cube()->mlx->mlx || !cube()->mlx->win)
 	{
 		ft_putstr_fd("Error: Failed to initialize MLX\n", 2);
@@ -64,8 +65,8 @@ int main(int ac, char **av)
 	}
 	gc_register(cube()->mlx->mlx);
 	gc_register(cube()->mlx->win);
-	read_file(av[1]);
-	draw_map();
+	// draw_map();
+	parse_textures();
 	init_player();
 	draw_player_at_position();
 	mlx_hook(cube()->mlx->win, 2, 1L<<0, &key_hook, NULL);

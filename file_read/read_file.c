@@ -6,16 +6,29 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/19 14:16:13 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:10:36 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void	load_textures(char *file_name)
+int	size_2d(char **arr)
+{
+	int i;
+
+	if (!arr)
+		return (0);
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
+
+void	read_textures_colors(char *file_name)
 {
 	int		fd;
 	char	*line;
+	char	**split_line;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
@@ -28,104 +41,39 @@ void	load_textures(char *file_name)
 		if (cube()->parse->textures[0].loaded &&
 			cube()->parse->textures[1].loaded &&
 			cube()->parse->textures[2].loaded &&
-			cube()->parse->textures[3].loaded)
+			cube()->parse->textures[3].loaded &&
+			cube()->parse->floor_ceiling->floor_color_loaded &&
+			cube()->parse->floor_ceiling->ceiling_color_loaded)
 			break ;
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strncmp(line, "NO ", 3) == 0 &&
-				!cube()->parse->textures[0].loaded)
+		if (check_for_whitespace(line))
+			continue ;
+		split_line = ft_split(line, ' ');
+		if (!split_line) // from this line to >>
 		{
-			cube()->parse->textures[0].path = ft_strdup(line + 3);
-			cube()->parse->textures[0].type = TEXTURE_NORTH;
-			cube()->parse->textures[0].loaded = true;			
+			gc_collect();
+			exit(EXIT_FAILURE);
 		}
-		else if (ft_strncmp(line, "SO ", 3) == 0 &&
-				!cube()->parse->textures[1].loaded)
+		else if (size_2d(split_line) != 2)
 		{
-			cube()->parse->textures[1].path = ft_strdup(line + 3);
-			cube()->parse->textures[1].type = TEXTURE_SOUTH;
-			cube()->parse->textures[1].loaded = true;
-		}
-		else if (ft_strncmp(line, "WE ", 3) == 0 &&
-				!cube()->parse->textures[2].loaded)
+			ft_putstr_fd("Error: invalid texture line\n", 2);
+			gc_collect();
+			exit(EXIT_FAILURE);
+		} // << to this line norm
+		else if (!check_if_valid(split_line))
 		{
-			cube()->parse->textures[2].path = ft_strdup(line + 3);
-			cube()->parse->textures[2].type = TEXTURE_WEST;
-			cube()->parse->textures[2].loaded = true;
-		}
-		else if (ft_strncmp(line, "EA ", 3) == 0 &&
-				!cube()->parse->textures[3].loaded)
-		{
-			cube()->parse->textures[3].path = ft_strdup(line + 3);
-			cube()->parse->textures[3].type = TEXTURE_EAST;
-			cube()->parse->textures[3].loaded = true;
-		}
-		else if (!check_for_whitespace(line))
-		{
+			printf("Error: Invalid texture line: %s\n", split_line[0]);
 			ft_putstr_fd("Error: Invalid texture line\n", 2);
 			gc_collect();
 			exit(EXIT_FAILURE);
 		}
+		load_textures_or_colors(split_line);
 	}
+	cube()->fd = fd;
 }
 
-char	**load_map(char *file_name, char **map)
-{
-	int		fd;
-	char	*line;
-
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("Error: could not open file\n", 2);
-		exit(EXIT_FAILURE);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (!map)
-			map = gc_malloc(sizeof(char *) * 1);
-		else
-			map = ft_realloc(map, sizeof(char *) * (cube()->parse->height + 1),
-							sizeof(char *) * (cube()->parse->height + 2));
-		if (!map)
-		{
-			gc_collect();
-			exit(EXIT_FAILURE);
-		}
-		ft_memset(line + ft_strlen(line) - 1, '\0', 1);
-		if (!*line)
-		{
-			// ft_putstr_fd("Error: Empty line in map\n", 2);
-			// gc_collect();
-			// exit(EXIT_FAILURE);
-			break ;
-		}
-		if (!cube()->parse->width)
-			cube()->parse->width = ft_strlen(line);
-		map[cube()->parse->height] = line;
-		cube()->parse->height++;
-	}
-	close(fd);
-	return (ft_putstr_fd("Map loaded successfully\n", 1), map);
-}
-
-void	print_textures(t_texture *textures)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		if (textures[i].loaded)
-		{
-			ft_putstr_fd("Texture ", 1);
-			ft_putstr_fd(textures[i].path, 1);
-			ft_putstr_fd(" loaded successfully\n", 1);
-		}
-		else
-		{
-			ft_putstr_fd("Texture not loaded\n", 2);
-		}
-	}
-}
 
 void    read_file(char *file_name)
 {
@@ -139,36 +87,33 @@ void    read_file(char *file_name)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	// cube()->parse->textures = gc_malloc(sizeof(t_texture) * 4);
-	// ft_memset(cube()->parse->textures, 0, sizeof(t_texture) * 4);
-	// if (!cube()->parse->textures)
-	// {
-	// 	gc_collect();
-	// 	exit(EXIT_FAILURE);
-	// }
-	// cube()->parse->floor_ceiling = gc_malloc(sizeof(t_floor_ceiling));
-	// if (!cube()->parse->floor_ceiling)
-	// {
-	// 	gc_collect();
-	// 	exit(EXIT_FAILURE);
-	// }
-	// load_textures(file_name);
-	// if (!cube()->parse->textures[0].loaded ||
-	// 	!cube()->parse->textures[1].loaded ||
-	// 	!cube()->parse->textures[2].loaded ||
-	// 	!cube()->parse->textures[3].loaded)
-	// {
-	// 	ft_putstr_fd("Error: Not all textures loaded\n", 2);
-	// 	gc_collect();
-	// 	exit(EXIT_FAILURE);
-	// }
-	// print_textures(cube()->parse->textures);
-	// check_textures();
+	cube()->parse->textures = gc_malloc(sizeof(t_texture) * 4);
+	ft_memset(cube()->parse->textures, 0, sizeof(t_texture) * 4);
+	cube()->parse->floor_ceiling = gc_malloc(sizeof(t_floor_ceiling));
+	if (!cube()->parse->floor_ceiling || !cube()->parse->textures)
+	{
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	read_textures_colors(file_name);
+	if (!cube()->parse->textures[0].loaded ||
+		!cube()->parse->textures[1].loaded ||
+		!cube()->parse->textures[2].loaded ||
+		!cube()->parse->textures[3].loaded ||
+		!cube()->parse->floor_ceiling->floor_color_loaded ||
+		!cube()->parse->floor_ceiling->ceiling_color_loaded)
+	{
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	// print_textures_colors();
 	cube()->parse->map = gc_malloc(sizeof(t_map));
 	if (!cube()->parse->map)
 	{
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	cube()->parse->map->map = load_map(file_name, map);
+	read_map();
+	// print_map();
+	
 }

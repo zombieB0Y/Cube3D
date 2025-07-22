@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 17:54:23 by zoentifi          #+#    #+#             */
-/*   Updated: 2024/11/04 03:13:34 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:58:10 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 static size_t	count_words(char const *s, char c)
 {
@@ -42,7 +42,7 @@ static char	*make_word(char const *s, char c)
 	len = 0;
 	while (s[len] && s[len] != c)
 		len++;
-	word = (char *)malloc(sizeof(char) * (len + 1));
+	word = (char *)gc_malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	i = 0;
@@ -53,16 +53,6 @@ static char	*make_word(char const *s, char c)
 	}
 	word[i] = '\0';
 	return (word);
-}
-
-static void	free_result(char **result, size_t count)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < count)
-		free(result[i++]);
-	free(result);
 }
 
 static char	**split_words(char const *s, char c, char **result,
@@ -79,10 +69,7 @@ static char	**split_words(char const *s, char c, char **result,
 			i++;
 		result[j] = make_word(s + i, c);
 		if (!result[j])
-		{
-			free_result(result, j);
 			return (NULL);
-		}
 		while (s[i] && s[i] != c)
 			i++;
 		j++;
@@ -99,61 +86,8 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	word_count = count_words(s, c);
-	result = (char **)malloc(sizeof(char *) * (word_count + 1));
+	result = (char **)gc_malloc(sizeof(char *) * (word_count + 1));
 	if (!result)
 		return (NULL);
 	return (split_words(s, c, result, word_count));
 }
-/*int main()
-{
-	char	**arr;
-	char	*src;
-	int		i;
-
-	src = "hello wolrd!";
-	i = 0;
-	arr = ft_split(src, ' ');
-	if (!arr)
-	{
-		printf("malloc fail\n");
-		return (0);
-	}
-	while (arr[i])
-	{
-		printf("%s\n", arr[i]);
-		i++;
-	}
-	ft_free(arr, i);
-	return (0);
-}
-malloc fail
-static char	*word(const char *s, char c, int *i)
-{
-    char    *arr;
-    int     j;
-    static int  call_count = 0;
-
-    j = 0;
-    while (s[(*i)] && s[(*i)] != c)
-    {
-        (*i)++;
-        j++;
-    }
-    (*i) -= j;
-    // Force malloc to fail on the second word
-    call_count++;
-    if (call_count == 2)
-        return (NULL);  // Simulate malloc failure
-    arr = (char *)malloc(sizeof(char) * (j + 1));
-    if (!arr)
-        return (NULL);
-    j = 0;
-    while (s[(*i)] && s[(*i)] != c)
-    {
-        arr[j] = s[(*i)];
-        j++;
-        (*i)++;
-    }
-    arr[j] = '\0';
-    return (arr);
-}*/
