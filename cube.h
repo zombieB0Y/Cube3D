@@ -12,7 +12,7 @@
 
 #ifndef CUBE_H
 # define CUBE_H
-
+# include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -23,6 +23,11 @@
 # include "mlx.h"
 
 // Node to track allocated pointers
+#define mapWidth 8
+#define mapHeight 8
+#define screenWidth 640
+#define screenHeight 480
+
 typedef struct t_GCNode
 {
 	void				*ptr;
@@ -42,5 +47,5 @@ t_Cube  *cube(void);
 void	gc_register(void *ptr);
 void	*gc_malloc(size_t size);
 void	gc_collect(void);
-
+void create_map(char **map );
 # endif

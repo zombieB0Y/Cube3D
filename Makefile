@@ -2,11 +2,11 @@ NAME = cube3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = #-Wall -Wextra -Werror -g
 
 MLX_FLAGS = -lmlx -lXext -lX11
 
-SRCS = cube.c gc.c
+SRCS = cube.c gc.c map_making.c
 
 OBJS = $(SRCS:.c=.o)
 
