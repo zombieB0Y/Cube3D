@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/22 16:16:32 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:35:51 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,6 @@ void	print_map(void);
 // Parsing functions
 void	parse_textures(void);
 bool	parse_color(char **tokens);
-bool	check_color_range(t_color *color);
+void	check_color_range(t_color *color);
 
 # endif

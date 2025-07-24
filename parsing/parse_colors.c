@@ -6,7 +6,12 @@ bool	parse_color(char **tokens)
 
 	color = gc_malloc(sizeof(t_color));
 	if (!color)
-		return (false);
+	{
+
+		ft_putstr_fd("Error: Failed to allocate memory for color\n", 2);
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
 	if (tokens[1] && tokens[2] && tokens[3])
 	{
 		color->r = ft_atoi(tokens[1]);
@@ -14,11 +19,16 @@ bool	parse_color(char **tokens)
 		color->b = ft_atoi(tokens[3]);
 	}
 	else
-		return (false);
+	{
+		ft_putstr_fd("Error: Invalid color format\n", 2);
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	check_color_range(color);
 	return (true);
 }
 
-bool	check_color_range(t_color *color)
+void	check_color_range(t_color *color)
 {
 	if (color->r < 0 || color->r > 255 ||
 		color->g < 0 || color->g > 255 ||
@@ -26,7 +36,6 @@ bool	check_color_range(t_color *color)
 	{
 		ft_putstr_fd("Error: Color values must be between 0 and 255\n", 2);
 		gc_collect();
-		return (false);
+		exit(EXIT_FAILURE);
 	}
-	return (true);
 }

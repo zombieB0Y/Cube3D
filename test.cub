@@ -3,11 +3,11 @@ C 135,206,235
 
 
 
-NO /home/zoentifi/Desktop/cube3D/textures/tile_000.xpm
-SO /home/zoentifi/Desktop/cube3D/textures/tile_000.xpm
-F 66,66,66
-WE /home/zoentifi/Desktop/cube3D/textures/tile_000.xpm
-EA /home/zoentifi/Desktop/cube3D/textures/tile_000.xpm
+NO ./xpm.xpm
+SO ./xpm.xpm
+F 66,25
+WE ./xpm.xpm
+EA ./xpm.xpm
 
 
 

@@ -9,7 +9,7 @@ void	check_textures(void)
 {
 	if (!check_for_valid_texture())
 	{
-		ft_putstr_fd("Error: Invalid texture1\n", 2);
+		ft_putstr_fd("Error: Invalid texture\n", 2);
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
@@ -34,7 +34,7 @@ bool	check_each_texture(int id)
 	fd = open(cube()->parse->textures[id].path, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Error: Texture %d not found: %s\n", id, cube()->parse->textures[id].path);
+		printf("Error: Texture %d not found: '%s'\n", id, cube()->parse->textures[id].path);
 		return (false);
 	}
 	// void	*img;

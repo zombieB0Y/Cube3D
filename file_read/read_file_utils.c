@@ -30,6 +30,7 @@ bool	check_if_valid(char **split_line)
 // can change this fucntion to increment for each texture and color
 void	load_textures_or_colors(char **split_line)
 {
+	ft_memset(split_line[1] + ft_strlen(split_line[1]) - 1, 0, 1);
 	if (ft_strcmp(split_line[0], "NO") == 0)
 	{
 		if (cube()->parse->textures[0].loaded)
