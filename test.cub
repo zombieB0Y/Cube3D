@@ -5,7 +5,7 @@ C 135,206,235
 
 NO ./xpm.xpm
 SO ./xpm.xpm
-F 66,25
+F   125,1,0
 WE ./xpm.xpm
 EA ./xpm.xpm
 

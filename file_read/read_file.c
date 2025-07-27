@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/22 16:10:36 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:41:59 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void    read_file(char *file_name)
 	cube()->parse->textures = gc_malloc(sizeof(t_texture) * 4);
 	ft_memset(cube()->parse->textures, 0, sizeof(t_texture) * 4);
 	cube()->parse->floor_ceiling = gc_malloc(sizeof(t_floor_ceiling));
+	ft_memset(cube()->parse->floor_ceiling, 0, sizeof(t_floor_ceiling));
 	if (!cube()->parse->floor_ceiling || !cube()->parse->textures)
 	{
 		gc_collect();
@@ -113,6 +114,7 @@ void    read_file(char *file_name)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
+	ft_memset(cube()->parse->map, 0, sizeof(t_map));
 	read_map();
 	// print_map();
 	

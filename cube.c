@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/24 12:36:34 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:17:46 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int main(int ac, char **av)
 	cube()->mlx->win_width = 960;
 	cube()->mlx->win_height = 640;
 	read_file(av[1]);
-	parse_color(ft_split(cube()->parse->floor_ceiling->floor_color, ','));
-	parse_color(ft_split(cube()->parse->floor_ceiling->ceiling_color, ','));
+	parse_color(ft_split1(cube()->parse->floor_ceiling->floor_color, ','));
+	parse_color(ft_split1(cube()->parse->floor_ceiling->ceiling_color, ','));
 	cube()->mlx->mlx = mlx_init();
 	cube()->mlx->win = mlx_new_window(cube()->mlx->mlx,
 	cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");

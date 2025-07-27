@@ -12,15 +12,15 @@ bool	parse_color(char **tokens)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	if (tokens[1] && tokens[2] && tokens[3])
+	if (size_2d(tokens) == 3)
 	{
-		color->r = ft_atoi(tokens[1]);
-		color->g = ft_atoi(tokens[2]);
-		color->b = ft_atoi(tokens[3]);
+		color->r = ft_atoi(tokens[0]);
+		color->g = ft_atoi(tokens[1]);
+		color->b = ft_atoi(tokens[2]);
 	}
 	else
 	{
-		ft_putstr_fd("Error: Invalid color format\n", 2);
+		ft_putstr_fd("Error: Invalid color format \n", 2);
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}

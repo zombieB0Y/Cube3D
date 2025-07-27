@@ -1,3 +1,2 @@
 #!/bin/bash
-make re && make clean && ./cube3D $1
-# valgrind --leak-check=full --track-origins=yes
+make re && make clean && valgrind --leak-check=full --track-origins=yes ./cube3D $1

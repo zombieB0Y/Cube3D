@@ -46,7 +46,7 @@ void    read_map(void)
 		if (!cube()->parse->map->map)
 			cube()->parse->map->map = gc_malloc(sizeof(char *) * 1);
 		else
-			cube()->parse->map->map = ft_realloc(cube()->parse->map->map, sizeof(char *) * (cube()->parse->map->height + 1),
+			cube()->parse->map->map = ft_realloc(cube()->parse->map->map, sizeof(char *) * (cube()->parse->map->height),
 							sizeof(char *) * (cube()->parse->map->height + 2));
 		if (!cube()->parse->map->map)
 		{
@@ -66,7 +66,7 @@ void    read_map(void)
 		exit(EXIT_FAILURE);
 	}
 	printf("Map loaded successfully with width: %d and height: %d\n",
-		cube()->parse->map->width, cube()->parse->map->height);
+	cube()->parse->map->width, cube()->parse->map->height);
 }
 void	print_map(void)
 {

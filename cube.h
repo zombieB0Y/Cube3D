@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/24 12:35:51 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:17:31 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		gcd(int a, int b);
 char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
+char	**ft_split1(char const *s, char c);
 
 // Argument validation
 int		validate_args(int ac, char **av);
