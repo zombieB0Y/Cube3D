@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/27 14:17:46 by zm               ###   ########.fr       */
+/*   Updated: 2025/07/28 11:25:24 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	key_hook(int keycode)
     // printf(">>>%d\n", keycode);
     if (keycode == 65307)
     {
-        // mlx_destroy_window(cube()->mlx->mlx, cube()->mlx->win);
+        mlx_destroy_window(cube()->mlx->mlx, cube()->mlx->win);
 		gc_collect();
 		ft_putstr_fd("Exiting...\n", 1);
         exit(0);
@@ -66,7 +66,7 @@ int main(int ac, char **av)
 		return (1);
 	}
 	gc_register(cube()->mlx->mlx);
-	gc_register(cube()->mlx->win);
+	// gc_register(cube()->mlx->win);
 	parse_textures();
 	// draw_map();
 	init_player();
@@ -74,5 +74,6 @@ int main(int ac, char **av)
 	mlx_hook(cube()->mlx->win, 2, 1L<<0, &key_hook, NULL);
 	// mlx_hook(cube()->mlx->win, 17, 0, &close_window, NULL);
 	mlx_loop(cube()->mlx->mlx);
+	gc_collect();
 	return (0);
 }
