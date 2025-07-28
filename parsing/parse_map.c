@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:05 by zm                #+#    #+#             */
-/*   Updated: 2025/07/28 14:35:48 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:20:48 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ bool	itiraite_foward(char **map, int i, int j)
 	}
 	return (false);
 }
+
 bool	itiraite_backward(char **map, int i, int j)
 {
 	int width;
@@ -53,7 +54,8 @@ bool	itiraite_upward(char **map, int i, int j)
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
-		return (false);
+		return (false);//                   110 001         100 001
+
 	while (i >= 0)
 	{
 		if (map[i][j] == '1')
@@ -90,7 +92,39 @@ bool	check_surrounding(char **map, int i, int j)
 		return (true);
 	else
 		return (false);
+}
 
+void	convert_spaces(void)
+{
+	char	**map;
+	int		x;
+	int		y;
+
+	map = cube()->parse->map->map;
+	x = 0;
+	while (map[x])
+	{
+		y = 0;
+		while (map[x][y])
+		{
+			if (map[x][y] == ' ')
+			{
+				map[x][y] = '2';
+				y++;
+				continue ;
+			}
+			if (ft_strchr("10NWES", map[x][y]))
+			{
+				while (map[x][y] && map[x][y] != '1')
+					y++;
+				continue ;
+			}
+			else
+			{
+				
+			}
+		}
+	}
 }
 
 void    map_parsing(void)
