@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:04:27 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 16:12:44 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:22:01 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*gc_malloc(size_t size)
 	if (!ptr)
 		return (NULL);
 	gc_register(ptr);
+	ft_memset(ptr, 0, size);
 	return (ptr);
 }
 

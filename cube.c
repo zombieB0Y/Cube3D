@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/28 11:25:24 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:51:08 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int main(int ac, char **av)
 	gc_register(cube()->mlx->mlx);
 	// gc_register(cube()->mlx->win);
 	parse_textures();
+	map_parsing();
 	// draw_map();
 	init_player();
 	draw_player_at_position();

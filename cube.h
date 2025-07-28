@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/27 14:17:31 by zm               ###   ########.fr       */
+/*   Updated: 2025/07/28 13:50:54 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	**ft_split1(char const *s, char c);
+char	*ft_strchr(const char *s, int c);
 
 // Argument validation
 int		validate_args(int ac, char **av);
@@ -158,5 +159,6 @@ void	print_map(void);
 void	parse_textures(void);
 bool	parse_color(char **tokens);
 void	check_color_range(t_color *color);
+void	map_parsing(void);
 
 # endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/27 14:41:59 by zm               ###   ########.fr       */
+/*   Updated: 2025/07/28 13:54:57 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void    read_file(char *file_name)
 	map = NULL;
 	(void)map;
 	cube()->parse = gc_malloc(sizeof(t_parse));
+	ft_memset(cube()->parse, 0, sizeof(t_parse));
 	if (!cube()->parse)
 	{
 		gc_collect();
