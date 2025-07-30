@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:05 by zm                #+#    #+#             */
-/*   Updated: 2025/07/28 16:20:48 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:08:09 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ void	convert_spaces(void)
 			}
 			if (ft_strchr("10NWES", map[x][y]))
 			{
-				while (map[x][y] && map[x][y] != '1')
-					y++;
-				continue ;
+				if (map[x][y] == '1' && map[x][y])
 			}
 			else
 			{
