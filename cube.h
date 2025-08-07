@@ -12,7 +12,7 @@
 
 #ifndef CUBE_H
 # define CUBE_H
-# include <mlx.h>
+# include "minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -20,13 +20,13 @@
 # include <string.h>
 # include <math.h>
 # include "libft/libft.h"
-# include "mlx.h"
+
 
 // Node to track allocated pointers
 #define mapWidth 8
 #define mapHeight 8
-#define screenWidth 640
-#define screenHeight 480
+#define screenWidth 1300
+#define screenHeight 900
 
 typedef struct t_GCNode
 {

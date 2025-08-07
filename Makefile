@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = #-Wall -Wextra -Werror -g
 
-MLX_FLAGS = -lmlx -lXext -lX11
+MLX_FLAGS =  -lXext -lX11
 
 SRCS = cube.c gc.c map_making.c
 
@@ -14,14 +14,19 @@ libft = libft
 
 libs = libft/libft.a
 
+mlx     = minilibx-linux
+mlx_lib = $(mlx)/libmlx.a
+
 all: make_libs $(NAME)
 
 
 make_libs:
 	$(MAKE) -C $(libft)
+	$(MAKE) -C $(mlx)
+
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) $(libs) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) $(libs) $(mlx_lib) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
