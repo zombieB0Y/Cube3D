@@ -1,128 +1,109 @@
 #include "cube.h"
 
-void create_map(char **map, t_cube_map *cube)
+static void initial_values(t_Cube *cube)
+{
+    cube->posx = 3;
+    cube->posy = 4;
+    cube->wallhit = 0;
+    cube->player_x = (cube->posx + 0.5) * 64;
+    cube->player_y = (cube->posy + 0.5) * 64;
+    cube->fov = 60;
+    cube->direction = 180;
+    cube->distance_to_projection_plan = (((screenHeight) / 2)) / (fabs(tan((cube->fov / 2 )* (3.14  / 180))));
+}
+void create_map(char **map, t_Cube *cube)
 {
     int x = -1;
-
+    initial_values(cube);
     char hard_coded_map[mapHeight][mapWidth] =
         {
             {'1', '1', '1', '1', '1', '1', '1', '1'},
             {'1', '0', '0', '0', '0', '0', '0', '1'},
-            {'1', '1', '0', '0', '0', '0', '0', '1'},
-            {'1', '0', '0', '0', '0', '1', '0', '1'},
-            {'1', '1', '0', 'N', '0', '0', '0', '1'},
-            {'1', '0', '0', '0', '1', '1', '0', '1'},
-            {'1', '1', '0', '0', '0', '0', '0', '1'},
+            {'1', '0', '0', '0', '0', '0', '0', '1'},
+            {'1', '0', '0', '0', '0', '0', '0', '1'},
+            {'1', '0', '0', 'N', '0', '0', '0', '1'},
+            {'1', '0', '0', '0', '0', '0', '0', '1'},
+            {'1', '0', '0', '0', '0', '0', '0', '1'},
             {'1', '1', '1', '1', '1', '1', '1', '1'}};
-
-    float player_x;
-    float player_y;
-    float raydirx;
-    float raydiry;
-    float distance_to_projection_plan;
-    float ray_angle;
-    float deltadistx;
-    float deltadisty;
-    float posx;
-    int side;
-    float posy;
-    int stepx;
-    int stepy;
-    int drawstart;
-    int drawend;
-    float sidedestx;
-    float sidedesty;
-    int mapx;
-    int mapy;
-    int fov;
-    int direction;
-    float walldist;
-    float lineheight;
-    posx = 3;
-    posy = 4;
-    int wallhit = 0;
-    player_x = (posx + 0.5) * 64;
-    player_y = (posy + 0.5) * 64;
-    fov = 60;
-    direction = 30;
 
     while (++x < screenWidth)
     {
-        mapx = (int)(player_x) / 64;
-        mapy = (int)(player_x) / 64;
-        printf("inside d loop\n");
-        ray_angle = (direction - (fov / 2)) + (direction * (x / (screenWidth)));
-        raydirx = cos(ray_angle);
-        raydiry = sin(ray_angle);
-        deltadistx = 1 / fabsf(raydirx);
-        deltadisty = 1 / fabsf(raydiry);
-        distance_to_projection_plan = ((screenWidth / 2)) / fabs(tan((fov / 2)));
-        if (raydirx > 0)
+        cube->mapx = (int)(cube->player_x) / 64;
+        cube->mapy = (int)(cube->player_x) / 64;
+        printf("incube->side d loop\n");
+        cube->ray_angle = (cube->direction - (cube->fov / 2)) + (cube->direction * (x / (screenWidth)));
+        cube->raydirx = cos(cube->ray_angle * (3.14 / 180));
+        cube->raydiry = sin(cube->ray_angle * (3.14 / 180));
+        cube->deltadistx = 1 / fabsf(cube->raydirx);
+        cube->deltadisty = 1 / fabsf(cube->raydiry);
+        // distance_to_projection_plan = ((screenWidth / 2)) / fabs(tan((cube->fov / 2)));
+        if (cube->raydirx > 0)
         {
-            stepx = 1;
-            sidedestx = (mapx + 1 - posx) * deltadistx;
+            cube->stepx = 1;
+            cube->sidedestx = (cube->mapx + 1 - cube->posx) * cube->deltadistx;
         }
         else
         {
-            stepx = -1;
-            sidedestx = (posx - mapx) * deltadistx;
+            cube->stepx = -1;
+            cube->sidedestx = (cube->posx - cube->mapx) * cube->deltadistx;
         }
-        if (raydiry > 0)
+        if (cube->raydiry > 0)
         {
-            stepy = 1;
-            sidedesty = (mapy + 1 - posy) * deltadisty;
+            cube->stepy = 1;
+            cube->sidedesty = (cube->mapy + 1 - cube->posy) * cube->deltadisty;
         }
         else
         {
-            sidedesty = (posy - mapy) * deltadisty;
-            stepy = -1;
+            cube->sidedesty = (cube->posy - cube->mapy) * cube->deltadisty;
+            cube->stepy = -1;
         }
-        wallhit = 0;
-        while (wallhit == 0)
+        cube->wallhit = 0;
+        while (cube->wallhit == 0)
         {
             printf("passed d cos sin x = %d \n", x);
-            if (sidedestx < sidedesty)
+            if (cube->sidedestx < cube->sidedesty)
             {
-                side = 1;
-                mapx += stepx;
-                sidedestx += deltadistx;
+                cube->side = 1;
+                cube->mapx += cube->stepx;
+                cube->sidedestx += cube->deltadistx;
             }
             else
             {
-                side = 0;
-                mapy += stepy;
-                sidedesty += deltadisty;
+                cube->side = 0;
+                cube->mapy += cube->stepy;
+                cube->sidedesty += cube->deltadisty;
             }
 
-            printf("mapx = %d , mapy = %d \n", mapx, mapy);
-            if (hard_coded_map[mapx][mapy] == '1')
+            printf("cube->mapx = %d , cube->mapy = %d \n", cube->mapx, cube->mapy);
+            if (hard_coded_map[cube->mapx][cube->mapy] == '1')
             {
-                printf("distance to projection plan %f\n", distance_to_projection_plan);
+                 printf("distance to projection plan %f\n", cube->distance_to_projection_plan);
                 printf("wall found\n");
-                wallhit = 1;
-                if (side)
+                cube->wallhit = 1;
+                if (cube->side)
                 {
-                    walldist = sidedestx - deltadistx;
+                    cube->walldist = cube->sidedestx - cube->deltadistx;
                 }
                 else
                 {
-                    walldist = sidedesty - deltadisty;
+                    cube->walldist = cube->sidedesty - cube->deltadisty;
                 }
-                if (side == 0)
+                if (cube->side == 0)
                 {
-                    printf("side = 0\n");
+                    printf("cube->side = 0\n");
                     return;
                 }
-                printf("walldist = %f sidedesty = %f sidedestx = %f \n", walldist, sidedesty, sidedestx);
-                lineheight = screenHeight / walldist;
-                drawstart = (screenHeight / 2) - (lineheight / 2);
-                drawend = (screenHeight / 2) + (lineheight / 2);
-                draw_in_image(cube, x, drawstart, drawend, side);
+                printf("walldist = %f cube->sidedesty = %f cube->sidedestx = %f \n", cube->walldist, cube->sidedesty, cube->sidedestx);
+                cube->lineheight = (64 / cube->walldist) * cube->distance_to_projection_plan;
+                //cube->lineheight = (cube->lineheight / cube->walldist) * (cube->distance_to_projection_plan);
+                cube->drawstart = (screenHeight / 2) - (cube->lineheight / 2);
+                cube->drawend = (screenHeight / 2) + (cube->lineheight / 2);
+                draw_in_image(&(cube->cube_map), x, cube->drawstart, cube->drawend, cube->side);
                 printf("finish draw_in_image()\n");
-                wallhit = 1;
+                cube->wallhit = 1;
             }
         }
     }
     printf("FINISHED\n");
-    printf("distance to projection plan %f\n", distance_to_projection_plan);
+    //   printf("distance to projection plan %f\n", distance_to_projection_plan);
 }
