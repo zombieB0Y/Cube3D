@@ -22,6 +22,6 @@ t_Cube  *cube(void)
 
 int main(int ac, char **av)
 {
-    create_map(NULL);
+   draw_world();
 
 }

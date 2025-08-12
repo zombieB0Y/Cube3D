@@ -4,9 +4,9 @@ CC = cc
 
 CFLAGS = #-Wall -Wextra -Werror -g
 
-MLX_FLAGS =  -lXext -lX11
+MLX_FLAGS =  -lXext -lX11 -lm
 
-SRCS = cube.c gc.c map_making.c
+SRCS = cube.c gc.c map_making.c draw_world.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 

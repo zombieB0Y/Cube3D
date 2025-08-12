@@ -36,7 +36,7 @@ typedef struct t_GCNode
 typedef struct s_Cube
 {
 	t_GCNode *g_head; // Head of the garbage collector linked list
-} t_cube;
+} t_Cube;
 
 typedef struct s_img
 {
@@ -62,9 +62,10 @@ t_Cube *cube(void);
 void gc_register(void *ptr);
 void *gc_malloc(size_t size);
 void gc_collect(void);
-void create_map(char **map);
-void img_pix_put(t_img *img, int x, int y, int color);
-int destroy_window(t_vars *vars);
-int destroy_window_helper(int code, t_vars *vars)
 
+// rssem la bari trssem
+void create_map(char **map , t_cube_map * cube);
+void img_pix_put(t_img *img, int x, int y, int color);
+int draw_world();
+void draw_in_image(t_cube_map * cube , int x , int start_line , int end_line , int side);
 #endif
