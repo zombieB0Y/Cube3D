@@ -31,7 +31,7 @@
 #define LEFTKEY 65363
 #define RIGHTKEY 65363
 #define MOVESPEED 0.1
-
+#define PI_VALUE 3.141592653589793
 typedef struct t_GCNode
 {
 	void *ptr;
