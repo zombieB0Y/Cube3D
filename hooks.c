@@ -1,53 +1,64 @@
 #include "cube.h"
 
-static int	key_hook_helper(t_Cube *cube, int keycode)
+static int key_hook_helper(t_Cube *cube, int keycode)
 {
 	if (keycode == UPKEY)
 	{
-        cube->posx +=(cube->raydirx * MOVESPEED);
-        cube->posy +=(cube->raydiry * MOVESPEED);
+
+		cube->posx += (float)(cos((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
+		cube->posy += (float)(sin((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
 	}
 	else if (keycode == DOWNKEY)
 	{
-		cube->posx -=(cube->raydirx * MOVESPEED);
-        cube->posy -=(cube->raydiry * MOVESPEED);
-	}
-	else if (keycode == RIGHTKEY)
-	{
-		cube->posx +=(cube->raydirx * MOVESPEED);
-        cube->posy +=(cube->raydiry * MOVESPEED);
+		cube->posx -= cos((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
+		cube->posy -= sin((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
 	}
 	else if (keycode == LEFTKEY)
 	{
-		cube->posx +=(cube->raydirx * MOVESPEED);
-        cube->posy +=(cube->raydiry * MOVESPEED);
+		cube->posx -= cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
+		cube->posy -= sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
+	}
+	else if (keycode == RIGHTKEY)
+	{
+		cube->posx += cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
+		cube->posy += sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
+	}
+	if (cube->posy >= mapHeight || cube->posy < 1)
+	{
+		if (cube->posy >= mapHeight)
+			cube->posy = mapHeight;
+		else
+			cube->posy = 1;
+	}
+	if (cube->posx >= mapWidth || cube->posx < 1)
+	{
+		if (cube->posx >= mapWidth)
+			cube->posx = mapWidth;
+		else 
+			cube->posx = 1;
 	}
 	return (1);
 }
 
-int	key_hook(int keycode, t_Cube *cube)
+int key_hook(int keycode, t_Cube *cube)
 {
-	void	*old_image;
+	void *old_image;
 
 	if (key_hook_helper(cube, keycode))
 	{
-		vars->cords.cx = (vars->cords.max_re + vars->cords.min_re) / 2;
-		vars->cords.cy = (vars->cords.max_im + vars->cords.min_im) / 2;
-		old_image = vars->fractal.img.mlx_img;
-		vars->fractal.img.mlx_img = mlx_new_image(vars->fractal.mlx,
-				vars->cords.image_width, vars->cords.image_height);
-		vars->fractal.img.addr = mlx_get_data_addr(vars->fractal.img.mlx_img,
-				&vars->fractal.img.bpp, &vars->fractal.img.line_len,
-				&vars->fractal.img.endian);
+		old_image = cube->cube_map.img.mlx_img;
+		cube->cube_map.img.mlx_img = mlx_new_image(cube->cube_map.mlx, screenWidth, screenHeight);
+		cube->cube_map.img.addr = mlx_get_data_addr(cube->cube_map.img.mlx_img,
+													&cube->cube_map.img.bpp, &cube->cube_map.img.line_len,
+													&cube->cube_map.img.endian);
 		if (old_image)
-			mlx_destroy_image(vars->fractal.mlx, old_image);
-		vars->draw(vars);
-		mlx_put_image_to_window(vars->fractal.mlx, vars->fractal.mlx_win,
-			vars->fractal.img.mlx_img, 0, 0);
+			mlx_destroy_image(cube->cube_map.mlx, old_image);
+		create_map(NULL, cube);
+		mlx_put_image_to_window(cube->cube_map.mlx, cube->cube_map.mlx_win,
+								cube->cube_map.img.mlx_img, 0, 0);
 	}
 	else if (keycode == 65307)
 	{
-		destroy_window(vars);
 		exit(0);
 	}
 	return (1);

@@ -1,29 +1,29 @@
 #include "cube.h"
 
-static void initial_values(t_Cube *cube)
+void initial_values(t_Cube *cube)
 {
-    cube->posx = 3;
-    cube->posy = 4;
+    cube->posx = 4;
+    cube->posy = 5;
     cube->wallhit = 0;
     cube->player_x = (cube->posx + 0.5);
     cube->player_y = (cube->posy + 0.5);
     cube->fov = 60;
-    cube->direction = 180;
+    cube->direction= 180;
     cube->distance_to_projection_plan = (((screenHeight) / 2)) / (fabs(tan((cube->fov / 2) * (PI_VALUE / 180))));
 }
 void create_map(char **map, t_Cube *cube)
 {
     int x = -1;
-    initial_values(cube);
+    
     char hard_coded_map[mapHeight][mapWidth] =
         {
             {'1', '1', '1', '1', '1', '1', '1', '1'},
             {'1', '0', '0', '0', '0', '0', '0', '1'},
-            {'1', '0', '0', '0', '0', '0', '0', '1'},
-            {'1', '0', '0', '0', '0', '0', '0', '1'},
-            {'1', '0', '0', 'N', '0', '0', '0', '1'},
+            {'1', '0', '0', '0', '0', '1', '0', '1'},
             {'1', '1', '0', '0', '0', '0', '0', '1'},
             {'1', '0', '0', '0', '0', '0', '0', '1'},
+            {'1', '1', '0', '0', '0', '0', '0', '1'},
+            {'1', '0', '1', '0', '1', '0', '0', '1'},
             {'1', '1', '1', '1', '1', '1', '1', '1'}};
 
     while (++x < screenWidth)
@@ -31,7 +31,6 @@ void create_map(char **map, t_Cube *cube)
         cube->mapx = (int)(cube->player_x);
         cube->mapy = (int)(cube->player_y);
         cube->ray_angle = cube->direction - (cube->fov / 2) + ((x / (double)screenWidth) * cube->fov);
-        printf("ray_angle = %f    x = %d", cube->ray_angle, x);
         cube->raydirx = cos(cube->ray_angle * (PI_VALUE / 180));
         cube->raydiry = sin(cube->ray_angle * (PI_VALUE / 180));
         cube->deltadistx = 1 / fabsf(cube->raydirx);
@@ -75,7 +74,6 @@ void create_map(char **map, t_Cube *cube)
 
             if (hard_coded_map[cube->mapy][cube->mapx] == '1')
             {
-                printf("wall found map[%d][%d]", cube->mapy, cube->mapx);
                 cube->wallhit = 1;
                 if (cube->side)
                 {
@@ -85,9 +83,7 @@ void create_map(char **map, t_Cube *cube)
                 {
                     cube->walldist = cube->sidedesty - cube->deltadisty;
                 }
-                if (cube->walldist == 0)
-                    cube->walldist = 0.1;
-                printf("walldist = %f \n", cube->walldist);
+                cube->walldist = fabs(cube->walldist  * cos ((cube->ray_angle -cube->direction) * (PI_VALUE / 180)));
                 cube->lineheight = screenWidth / cube->walldist;
                 cube->drawstart = (screenHeight / 2) - (cube->lineheight / 2);
                 cube->drawend = (screenHeight / 2) + (cube->lineheight / 2);
@@ -96,4 +92,5 @@ void create_map(char **map, t_Cube *cube)
             }
         }
     }
+    printf("posx = %f , posy = %f \n",cube->posx , cube->posy);
 }

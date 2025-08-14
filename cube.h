@@ -26,9 +26,9 @@
 #define mapHeight 8
 #define screenWidth 1300
 #define screenHeight 900
-#define UPKEY 65363
-#define DOWNKEY 65363
-#define LEFTKEY 65363
+#define UPKEY 65362
+#define DOWNKEY 65364
+#define LEFTKEY 65361
 #define RIGHTKEY 65363
 #define MOVESPEED 0.1
 #define PI_VALUE 3.141592653589793
@@ -99,4 +99,11 @@ void create_map(char **map, t_Cube *cube);
 void img_pix_put(t_img *img, int x, int y, int color);
 int draw_world();
 void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
+
+// herrek 
+int key_hook(int keycode, t_Cube *cube);
+
+// values controls
+void initial_values(t_Cube *cube);
+
 #endif
