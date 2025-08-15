@@ -32,6 +32,10 @@
 #define RIGHTKEY 65363
 #define MOVESPEED 0.1
 #define PI_VALUE 3.141592653589793
+#define W_KEY 119 
+#define S_KEY 115
+#define A_KEY 97
+#define D_KEY 100
 typedef struct t_GCNode
 {
 	void *ptr;

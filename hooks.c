@@ -2,27 +2,31 @@
 
 static int key_hook_helper(t_Cube *cube, int keycode)
 {
-	if (keycode == UPKEY)
+	if (keycode == W_KEY)
 	{
 
 		cube->posx += (float)(cos((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
 		cube->posy += (float)(sin((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
 	}
-	else if (keycode == DOWNKEY)
+	else if (keycode == S_KEY)
 	{
 		cube->posx -= cos((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
 		cube->posy -= sin((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
 	}
-	else if (keycode == LEFTKEY)
+	else if (keycode == A_KEY)
 	{
 		cube->posx -= cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
 		cube->posy -= sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
 	}
-	else if (keycode == RIGHTKEY)
+	else if (keycode == D_KEY)
 	{
 		cube->posx += cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
 		cube->posy += sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
 	}
+	else if (keycode == LEFTKEY)
+		cube->direction -= 2;
+	else if (keycode == RIGHTKEY)
+		cube->direction += 2;
 	if (cube->posy >= mapHeight || cube->posy < 1)
 	{
 		if (cube->posy >= mapHeight)
@@ -43,7 +47,6 @@ static int key_hook_helper(t_Cube *cube, int keycode)
 int key_hook(int keycode, t_Cube *cube)
 {
 	void *old_image;
-
 	if (key_hook_helper(cube, keycode))
 	{
 		old_image = cube->cube_map.img.mlx_img;

@@ -37,7 +37,8 @@ int draw_world()
     create_map(NULL, &cube);
 
     mlx_put_image_to_window(cube.cube_map.mlx, cube.cube_map.mlx_win, cube.cube_map.img.mlx_img, 0, 0);
-	mlx_key_hook(cube.cube_map.mlx_win, key_hook, &cube);
+    mlx_hook(cube.cube_map.mlx_win, 2, 1L << 0, key_hook, &cube);
+    mlx_hook(cube.cube_map.mlx_win, 3, 1L << 1, key_hook, &cube);
     mlx_loop(cube.cube_map.mlx);
     return (1);
 }
