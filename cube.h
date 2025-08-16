@@ -110,4 +110,7 @@ int key_hook(int keycode, t_Cube *cube);
 // values controls
 void initial_values(t_Cube *cube);
 
+//DDA 
+float wall_distance(t_Cube *cube, float ray_angle);
+
 #endif
