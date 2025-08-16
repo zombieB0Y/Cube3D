@@ -6,7 +6,7 @@ CFLAGS = #-Wall -Wextra -Werror -g
 
 MLX_FLAGS =  -lXext -lX11 -lm
 
-SRCS = cube.c gc.c map_making.c draw_world.c utils.c hooks.c
+SRCS = cube.c gc.c map_making.c draw_world.c utils.c hooks.c move_to.c
 
 OBJS = $(SRCS:.c=.o)
 

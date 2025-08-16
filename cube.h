@@ -32,7 +32,7 @@
 #define RIGHTKEY 65363
 #define MOVESPEED 0.1
 #define PI_VALUE 3.141592653589793
-#define W_KEY 119 
+#define W_KEY 119
 #define S_KEY 115
 #define A_KEY 97
 #define D_KEY 100
@@ -41,7 +41,6 @@ typedef struct t_GCNode
 	void *ptr;
 	struct t_GCNode *next;
 } t_GCNode;
-
 
 typedef struct s_img
 {
@@ -57,7 +56,7 @@ typedef struct s_cube_map
 	void *mlx;
 	void *mlx_win;
 	t_img img;
-	
+
 } t_cube_map;
 typedef struct s_Cube
 {
@@ -104,13 +103,14 @@ void img_pix_put(t_img *img, int x, int y, int color);
 int draw_world();
 void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
 
-// herrek 
+// herrek
 int key_hook(int keycode, t_Cube *cube);
-
+void mv(t_Cube *cube, int keycode, float *direction_move);
 // values controls
 void initial_values(t_Cube *cube);
 
-//DDA 
+// DDA
 float wall_distance(t_Cube *cube, float ray_angle);
+int is_wall(int x, int y);
 
 #endif

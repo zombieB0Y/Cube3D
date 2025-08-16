@@ -1,78 +1,55 @@
 #include "cube.h"
 
+int check_distance_true(t_Cube *cube, float direction_move)
+{
+	if (wall_distance(cube, direction_move) <= 0.9)
+	{
+		if (wall_distance(cube, direction_move + 20) <= 0.9)
+		{
+			if (wall_distance(cube, direction_move - 20) <= 0.9)
+			{
+				return (0);
+			}
+		}
+	}
+	return (1);
+}
+
 static int key_hook_helper(t_Cube *cube, int keycode)
 {
 	float walldistance;
 	float direction_mov;
 	float old_posx;
 	float old_posy;
+	int move;
 
 	old_posx = cube->posx;
 	old_posy = cube->posy;
 	direction_mov = cube->direction;
-	if (keycode == W_KEY)
+	if (keycode == LEFTKEY || keycode == RIGHTKEY)
 	{
-		cube->posx += (float)(cos((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
-		cube->posy += (float)(sin((cube->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
-		walldistance = wall_distance(cube, direction_mov);
-		printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
+		if (keycode == LEFTKEY)
+		{
+			// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
+			cube->direction -= 2;
+			return (1);
+		}
+		else if (keycode == RIGHTKEY)
+		{
+			// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
+			cube->direction += 2;
+			return (1);
+		}
 	}
-	else if (keycode == S_KEY)
+	else
 	{
+		mv(cube , keycode , &direction_mov);
+	}
 
-		cube->posx -= cos((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
-		cube->posy -= sin((cube->direction * (PI_VALUE / 180))) * MOVESPEED;
-		direction_mov += 180;
-		walldistance = wall_distance(cube, direction_mov);
-		printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
-	}
-	else if (keycode == A_KEY)
-	{
-
-		cube->posx -= cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
-		cube->posy -= sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
-		direction_mov -= 90;
-		walldistance = wall_distance(cube, direction_mov);
-		printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
-	}
-	else if (keycode == D_KEY)
-	{
-		cube->posx += cos((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
-		cube->posy += sin((cube->direction * (PI_VALUE / 180)) + (PI_VALUE / 2)) * MOVESPEED;
-		direction_mov += 90;
-		walldistance = wall_distance(cube, direction_mov);
-		printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
-	}
-	else if (keycode == LEFTKEY)
-	{
-		// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
-		cube->direction -= 2;
-		return(1);
-	}
-	else if (keycode == RIGHTKEY)
-	{
-		// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
-		cube->direction += 2;
-		return(1);
-	}
-	if (cube->posy >= mapHeight || cube->posy < 1)
-	{
-		if (cube->posy >= mapHeight)
-			cube->posy = mapHeight;
-		else
-			cube->posy = 1;
-	}
-	if (cube->posx >= mapWidth || cube->posx < 1)
-	{
-		if (cube->posx >= mapWidth)
-			cube->posx = mapWidth;
-		else
-			cube->posx = 1;
-	}
-	if (walldistance <= 0.5)
+	if (is_wall((int)cube->posx, (int)cube->posy) || wall_distance(cube,direction_mov) <= 0.3)
 	{
 		cube->posx = old_posx;
-		cube->posy =  old_posy;
+		cube->posy = old_posy;
 		return (0);
 	};
 	return (1);
