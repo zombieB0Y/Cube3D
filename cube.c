@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/08/24 01:52:34 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:19:41 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,26 @@ int main(int ac, char **av)
 {
 	if (validate_args(ac, av))
 		return (1);
-	cube()->mlx = gc_malloc(sizeof(t_mlx));
-	if (!cube()->mlx)
-	{
-		ft_putstr_fd("Error: Failed to allocate memory for MLX\n", 2);
-		return (1);
-	}
-	cube()->mlx->win_width = 960;
-	cube()->mlx->win_height = 640;
+	// cube()->mlx = gc_malloc(sizeof(t_mlx));
+	// if (!cube()->mlx)
+	// {
+	// 	ft_putstr_fd("Error: Failed to allocate memory for MLX\n", 2);
+	// 	return (1);
+	// }
+	// cube()->mlx->win_width = 960;
+	// cube()->mlx->win_height = 640;
 	read_file(av[1]);
 	parse_color(ft_split1(cube()->parse->floor_ceiling->floor_color, ','));
 	parse_color(ft_split1(cube()->parse->floor_ceiling->ceiling_color, ','));
-	cube()->mlx->mlx = mlx_init();
-	cube()->mlx->win = mlx_new_window(cube()->mlx->mlx,
-	cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");
-	if (!cube()->mlx->mlx || !cube()->mlx->win)
-	{
-		ft_putstr_fd("Error: Failed to initialize MLX\n", 2);
-		return (1);
-	}
-	gc_register(cube()->mlx->mlx);
+	// cube()->mlx->mlx = mlx_init();
+	// cube()->mlx->win = mlx_new_window(cube()->mlx->mlx,
+	// cube()->mlx->win_width, cube()->mlx->win_height, "Cube3D");
+	// if (!cube()->mlx->mlx || !cube()->mlx->win)
+	// {
+	// 	ft_putstr_fd("Error: Failed to initialize MLX\n", 2);
+	// 	return (1);
+	// }
+	// gc_register(cube()->mlx->mlx);
 	// gc_register(cube()->mlx->win);
 	parse_textures();
     if (!change_space(0, 0, cube()->parse->map->height + 2, cube()->parse->map->width + 2))
@@ -76,11 +76,11 @@ int main(int ac, char **av)
 	}
 	map_parsing();
 	// draw_map();
-	init_player();
-	draw_player_at_position();
-	mlx_hook(cube()->mlx->win, 2, 1L<<0, &key_hook, NULL);
+	// init_player();
+	// draw_player_at_position();
+	// mlx_hook(cube()->mlx->win, 2, 1L<<0, &key_hook, NULL);
 	// mlx_hook(cube()->mlx->win, 17, 0, &close_window, NULL);
-	mlx_loop(cube()->mlx->mlx);
+	// mlx_loop(cube()->mlx->mlx);
 	gc_collect();
 	return (0);
 }
