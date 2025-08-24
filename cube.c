@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/28 13:51:08 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/08/24 01:52:34 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ int main(int ac, char **av)
 	gc_register(cube()->mlx->mlx);
 	// gc_register(cube()->mlx->win);
 	parse_textures();
+    if (!change_space(0, 0, cube()->parse->map->height + 2, cube()->parse->map->width + 2))
+	{
+		mlx_destroy_window(cube()->mlx->mlx, cube()->mlx->win);
+		gc_collect();
+		exit(1);
+	}
 	map_parsing();
 	// draw_map();
 	init_player();

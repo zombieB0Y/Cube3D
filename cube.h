@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/28 13:50:54 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/08/24 01:45:46 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,20 @@ typedef struct s_mlx
 	void	*img;
 }				t_mlx;
 
+typedef struct point
+{
+    int	x;
+    int	y;
+}	t_point;
+
+typedef struct queue
+{
+    t_point	*data;
+    int		front;
+    int		back;
+    int		capacity;
+} 	t_queue;
+
 // our global cube instance
 typedef struct s_Cube
 {
@@ -126,6 +140,7 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	**ft_split1(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
+void	*ft_calloc(size_t count, size_t size);
 
 // Argument validation
 int		validate_args(int ac, char **av);
@@ -160,5 +175,6 @@ void	parse_textures(void);
 bool	parse_color(char **tokens);
 void	check_color_range(t_color *color);
 void	map_parsing(void);
+int		change_space(int X, int Y, int height, int width);
 
 # endif
