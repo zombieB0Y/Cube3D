@@ -1,37 +1,51 @@
 #include "cube.h"
 
-char hard_coded_map[mapHeight][mapWidth] =
-    {
-        {'1', '1', '1', '1', '1', '1', '1', '1'},
-        {'1', '0', '0', '1', '0', '0', '0', '1'},
-        {'1', '0', '0', '0', '0', '1', '0', '1'},
-        {'1', '1', '0', '0', '1', '0', '0', '1'},
-        {'1', '0', '0', '0', '0', '0', '0', '1'},
-        {'1', '1', '0', '0', '0', '1', '0', '1'},
-        {'1', '0', '1', '0', '1', '0', '0', '1'},
-        {'1', '1', '1', '1', '1', '1', '1', '1'}};
-
-int is_wall(int x , int y)
+void give_me_map(char **map, t_Cube *cube)
 {
+    int j;
+    int i;
+    int width;
+    int hieght;
 
-    return (hard_coded_map[y][x] == '1');
+    i = 0;
+    j = 0;
+    width = 0;
+    hieght = 0;
+    while (map[hieght])
+        hieght++;
+    while (map[0][width])
+        width++;
+    cube->map_height = hieght;
+    cube->map_width = width;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if ((map[i][j] != '0') && (map[i][j] != '1'))
+                is_player(map[i][j], j , i , cube);
+            j++;
+        }
+        i++;
+    }
+    cube->map = map;
 }
 
+int is_wall(char **map, int x, int y)
+{
+    return (map[y][x] == '1');
+}
 void initial_values(t_Cube *cube)
 {
-    cube->posx = 4;
-    cube->posy = 5;
     cube->wallhit = 0;
     cube->fov = 60;
-    cube->direction = 180;
     cube->distance_to_projection_plan = (((screenHeight) / 2)) / (fabs(tan((cube->fov / 2) * (PI_VALUE / 180))));
 }
-float wall_distance(t_Cube *cube, float ray_angle)
+
+static void initial_wall_distance(t_Cube *cube, float ray_angle)
 {
-    cube->player_x = (cube->posx);
-    cube->player_y = (cube->posy);
-    cube->mapx = (int)(cube->player_x);
-    cube->mapy = (int)(cube->player_y);
+    cube->mapx = (int)(cube->posx);
+    cube->mapy = (int)(cube->posy);
     cube->raydirx = cos(ray_angle * (PI_VALUE / 180));
     cube->raydiry = sin(ray_angle * (PI_VALUE / 180));
     cube->deltadistx = 1 / fabsf(cube->raydirx);
@@ -47,7 +61,7 @@ float wall_distance(t_Cube *cube, float ray_angle)
         cube->sidedestx = (cube->posx - cube->mapx) * cube->deltadistx;
     }
     if (cube->raydiry > 0)
-    {
+    {   
         cube->stepy = 1;
         cube->sidedesty = (cube->mapy + 1 - cube->posy) * cube->deltadisty;
     }
@@ -57,6 +71,14 @@ float wall_distance(t_Cube *cube, float ray_angle)
         cube->stepy = -1;
     }
     cube->wallhit = 0;
+}
+
+float wall_distance(t_Cube *cube, float ray_angle)
+{
+    char **map;
+
+    map = cube->map;
+    initial_wall_distance(cube, ray_angle);
     while (cube->wallhit == 0)
     {
         if (cube->sidedestx < cube->sidedesty)
@@ -71,16 +93,14 @@ float wall_distance(t_Cube *cube, float ray_angle)
             cube->mapy += cube->stepy;
             cube->sidedesty += cube->deltadisty;
         }
-
-        if (hard_coded_map[cube->mapy][cube->mapx] == '1')
+        if (map[cube->mapy][cube->mapx] == '1')
         {
             cube->wallhit = 1;
             if (cube->side)
                 cube->walldist = cube->sidedestx - cube->deltadistx;
             else
                 cube->walldist = cube->sidedesty - cube->deltadisty;
-           // return ((float)fabs(cube->walldist * cos((ray_angle - cube->direction) * (PI_VALUE / 180))));
-           return (cube->walldist);
+            return (cube->walldist);
         }
     }
     return (-1);

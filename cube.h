@@ -22,8 +22,7 @@
 #include "libft/libft.h"
 
 // Node to track allocated pointers
-#define mapWidth 8
-#define mapHeight 8
+
 #define screenWidth 1300
 #define screenHeight 900
 #define UPKEY 65362
@@ -36,6 +35,11 @@
 #define S_KEY 115
 #define A_KEY 97
 #define D_KEY 100
+#define EAST 360
+#define NORTH 90
+#define WEST 180
+#define SOUTH 270
+
 typedef struct t_GCNode
 {
 	void *ptr;
@@ -58,11 +62,10 @@ typedef struct s_cube_map
 	t_img img;
 
 } t_cube_map;
+
 typedef struct s_Cube
 {
 	t_GCNode *g_head; // Head of the garbage collector linked list
-	float player_x;
-	float player_y;
 	float raydirx;
 	float raydiry;
 	float distance_to_projection_plan;
@@ -85,6 +88,9 @@ typedef struct s_Cube
 	float walldist;
 	float lineheight;
 	int wallhit;
+	int map_height;
+	int map_width;
+	char **map;
 	t_cube_map cube_map;
 
 } t_Cube;
@@ -106,11 +112,14 @@ void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int si
 // herrek
 int key_hook(int keycode, t_Cube *cube);
 void mv(t_Cube *cube, int keycode, float *direction_move);
+
 // values controls
 void initial_values(t_Cube *cube);
+int is_player(char player, int posx, int posy, t_Cube *cube);
+void give_me_map(char **map, t_Cube *cube);
 
 // DDA
 float wall_distance(t_Cube *cube, float ray_angle);
-int is_wall(int x, int y);
+int is_wall(char ** map , int x, int y );
 
 #endif

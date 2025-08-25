@@ -1,17 +1,13 @@
 #include "cube.h"
 
-int check_distance_true(t_Cube *cube, float direction_move)
+static int will_he_moves(float old_posx, float old_posy, t_Cube *cube, float direction_mov )
 {
-	if (wall_distance(cube, direction_move) <= 0.9)
+	if (is_wall(cube->map , (int)cube->posx, (int)cube->posy) || wall_distance(cube, direction_mov) <= 0.3)
 	{
-		if (wall_distance(cube, direction_move + 20) <= 0.9)
-		{
-			if (wall_distance(cube, direction_move - 20) <= 0.9)
-			{
-				return (0);
-			}
-		}
-	}
+		cube->posx = old_posx;
+		cube->posy = old_posy;
+		return (0);
+	};
 	return (1);
 }
 
@@ -29,30 +25,18 @@ static int key_hook_helper(t_Cube *cube, int keycode)
 	if (keycode == LEFTKEY || keycode == RIGHTKEY)
 	{
 		if (keycode == LEFTKEY)
-		{
-			// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
 			cube->direction -= 2;
-			return (1);
-		}
+
 		else if (keycode == RIGHTKEY)
-		{
-			// printf("walldistance = %f  || direction_move = %f \n", walldistance, direction_mov);
 			cube->direction += 2;
-			return (1);
-		}
+		return (1);
 	}
 	else
 	{
-		mv(cube , keycode , &direction_mov);
+		mv(cube, keycode, &direction_mov);
 	}
 
-	if (is_wall((int)cube->posx, (int)cube->posy) || wall_distance(cube,direction_mov) <= 0.3)
-	{
-		cube->posx = old_posx;
-		cube->posy = old_posy;
-		return (0);
-	};
-	return (1);
+	return (will_he_moves(old_posx , old_posy , cube , direction_mov ));
 }
 
 int key_hook(int keycode, t_Cube *cube)

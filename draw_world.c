@@ -1,4 +1,14 @@
 #include "cube.h"
+char *hard_coded_map[] = {
+    "1111111111111111",
+    "1000000000000001",
+    "1000000000000001",
+    "1000000000000001",
+    "100000000000W001",
+    "1000010000000001",
+    "1111111111111111",
+    NULL};
+
 void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side)
 {
     int pixel;
@@ -33,6 +43,7 @@ int draw_world()
         return (free(cube.cube_map.mlx), 0);
     cube.cube_map.img.mlx_img = mlx_new_image(cube.cube_map.mlx, screenWidth, screenHeight);
     cube.cube_map.img.addr = mlx_get_data_addr(cube.cube_map.img.mlx_img, &cube.cube_map.img.bpp, &cube.cube_map.img.line_len, &cube.cube_map.img.endian);
+    give_me_map(hard_coded_map, &cube);
     initial_values(&cube);
     create_map(NULL, &cube);
 
