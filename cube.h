@@ -11,23 +11,40 @@
 /* ************************************************************************** */
 
 #ifndef CUBE_H
-# define CUBE_H
+#define CUBE_H
 
-# include "minilibx-linux/mlx.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
-# include <math.h>
-# include <stdbool.h>
-# include "get_line/get_line.h"
+#include "minilibx-linux/mlx.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <math.h>
+#include <stdbool.h>
+#include "get_line/get_line.h"
+
+#define screenWidth 1300
+#define screenHeight 900
+#define UPKEY 65362
+#define DOWNKEY 65364
+#define LEFTKEY 65361
+#define RIGHTKEY 65363
+#define MOVESPEED 0.1
+#define PI_VALUE 3.141592653589793
+#define W_KEY 119
+#define S_KEY 115
+#define A_KEY 97
+#define D_KEY 100
+#define EAST 360
+#define NORTH 90
+#define WEST 180
+#define SOUTH 270
 
 typedef struct t_GCNode
 {
-	void				*ptr;
-	struct t_GCNode		*next;
-}						t_GCNode;
+	void *ptr;
+	struct t_GCNode *next;
+} t_GCNode;
 
 typedef enum e_texture_type
 {
@@ -35,146 +52,205 @@ typedef enum e_texture_type
 	TEXTURE_SOUTH,
 	TEXTURE_WEST,
 	TEXTURE_EAST
-}	t_texture_type;
+} t_texture_type;
 
 typedef struct s_color
 {
 	int r;
 	int g;
 	int b;
-}	t_color;
+} t_color;
 
 typedef struct s_player
 {
-    int x;
-    int y;
-    int size;
-}	t_player;
+	int x;
+	int y;
+	int size;
+} t_player;
 
 typedef struct s_texture
 {
-	char			*path;
-	int				width;
-	int				height;
-	t_texture_type	type;
-	bool			loaded;
-}			t_texture;
+	char *path;
+	int width;
+	int height;
+	t_texture_type type;
+	bool loaded;
+} t_texture;
 
 typedef struct s_floor_ceiling
 {
-	char		*floor_color;
-	bool		floor_color_loaded;
-	char		*ceiling_color;
-	bool		ceiling_color_loaded;
-}			t_floor_ceiling;
+	char *floor_color;
+	bool floor_color_loaded;
+	char *ceiling_color;
+	bool ceiling_color_loaded;
+} t_floor_ceiling;
 
 typedef struct s_map
 {
-	char		**map;
-	int			width;
-	int			height;
-}			t_map;
+	char **map;
+	int width;
+	int height;
+} t_map;
 
 typedef struct s_parse
 {
-	t_texture			*textures;
-	t_floor_ceiling		*floor_ceiling;
-	t_map				*map;
-	int					width;
-	int					height;
-}						t_parse;
+	t_texture *textures;
+	t_floor_ceiling *floor_ceiling;
+	t_map *map;
+	int width;
+	int height;
+} t_parse;
 
-typedef struct s_mlx
+typedef struct s_img
 {
-	void	*mlx;
-	void	*win;
-	int		win_width;
-	int		win_height;
-	void	*img;
-}				t_mlx;
+	void *mlx_img;
+	char *addr;
+	int bpp;
+	int line_len;
+	int endian;
+} t_img;
 
+typedef struct s_cube_map
+{
+	void *mlx;
+	void *mlx_win;
+	t_img img;
+
+} t_cube_map;
 typedef struct point
 {
-    int	x;
-    int	y;
-}	t_point;
+	int x;
+	int y;
+} t_point;
 
 typedef struct queue
 {
-    t_point	*data;
-    int		front;
-    int		back;
-    int		capacity;
-} 	t_queue;
+	t_point *data;
+	int front;
+	int back;
+	int capacity;
+} t_queue;
 
 // our global cube instance
 typedef struct s_Cube
 {
-	t_GCNode	*g_head;
-	t_parse		*parse;
-	t_mlx		*mlx;
-	t_player	*player;
-	int			fd;
-}				t_Cube;
+	t_GCNode *g_head;
+	t_parse *parse;
+	int fd;
 
-t_Cube  *cube(void);
+	// ilyas
+	float raydirx;
+	float raydiry;
+	float distance_to_projection_plan;
+	float ray_angle;
+	float deltadistx;
+	float deltadisty;
+	float posx;
+	int side;
+	float posy;
+	int stepx;
+	int stepy;
+	int drawstart;
+	int drawend;
+	float sidedestx;
+	float sidedesty;
+	int mapx;
+	int mapy;
+	int fov;
+	int direction;
+	float walldist;
+	float lineheight;
+	int wallhit;
+	char **map;
+	t_cube_map cube_map;
+
+} t_Cube;
+
 
 // Memory management functions
-void	gc_register(void *ptr);
-void	*gc_malloc(size_t size);
-void	gc_collect(void);
+void gc_register(void *ptr);
+void *gc_malloc(size_t size);
+void gc_collect(void);
 
 // Utility functions
-size_t	ft_strlen(const char *s);
-int		ft_strcmp(const char *s1, const char *s2);
-void	ft_putstr_fd(char *s, int fd);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
-char	*ft_strdup(const char *s1);
-void	*ft_memset(void *s, int c, size_t n);
-bool	ft_isspace(char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		gcd(int a, int b);
-char	**ft_split(char const *s, char c);
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
-char	**ft_split1(char const *s, char c);
-char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t count, size_t size);
+size_t ft_strlen(const char *s);
+int ft_strcmp(const char *s1, const char *s2);
+void ft_putstr_fd(char *s, int fd);
+void *ft_memcpy(void *dst, const void *src, size_t n);
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
+char *ft_strdup(const char *s1);
+void *ft_memset(void *s, int c, size_t n);
+bool ft_isspace(char c);
+int ft_strncmp(const char *s1, const char *s2, size_t n);
+int gcd(int a, int b);
+char **ft_split(char const *s, char c);
+int ft_atoi(const char *str);
+int ft_isdigit(int c);
+char **ft_split1(char const *s, char c);
+char *ft_strchr(const char *s, int c);
+void *ft_calloc(size_t count, size_t size);
 
 // Argument validation
-int		validate_args(int ac, char **av);
+int validate_args(int ac, char **av);
 
 // player drawing
-void	init_player(void);
-void	move_player(int dx, int dy);
-void	clear_player_area(int x, int y, int size);
-void	draw_player_at_position(void);
+void init_player(void);
+void move_player(int dx, int dy);
+void clear_player_area(int x, int y, int size);
+void draw_player_at_position(void);
 
 // map drawing
-void	draw_map(void);
-void	draw_tile(int x, int y, char tile);
-void	draw_rectangle(int x, int y, int width, int height, int color);
+void draw_map(void);
+void draw_tile(int x, int y, char tile);
+void draw_rectangle(int x, int y, int width, int height, int color);
 
 // File reading
-bool	check_for_whitespace(char *line);
-void	read_file(char *file_name);
-void	read_textures_colors(char *file_name);
-void	check_textures(void);
-bool	check_for_valid_texture(void);
-bool	check_each_texture(int id);
-int		size_2d(char **arr);
-bool	check_if_valid(char **split_line);
-void	load_textures_or_colors(char **split_line);
-void	print_textures_colors(void);
-void	read_map(void);
-void	print_map(void);
+bool check_for_whitespace(char *line);
+void read_file(char *file_name);
+void read_textures_colors(char *file_name);
+void check_textures(void);
+bool check_for_valid_texture(void);
+bool check_each_texture(int id);
+int size_2d(char **arr);
+bool check_if_valid(char **split_line);
+void load_textures_or_colors(char **split_line);
+void print_textures_colors(void);
+void read_map(void);
+void print_map(void);
 
 // Parsing functions
-void	parse_textures(void);
-bool	parse_color(char **tokens);
-void	check_color_range(t_color *color);
-void	map_parsing(void);
-int		change_space(int X, int Y, int height, int width);
+void parse_textures(void);
+bool parse_color(char **tokens);
+void check_color_range(t_color *color);
+void map_parsing(void);
+int change_space(int X, int Y, int height, int width);
 
-# endif
+// ************************************* ILYAS FUNCTIONS ******************************//
+// our global cube instance
+t_Cube *cube(void);
+
+// Memory management functions
+void gc_register(void *ptr);
+void *gc_malloc(size_t size);
+void gc_collect(void);
+
+// rssem la bari trssem
+void create_map(t_Cube *cube);
+void img_pix_put(t_img *img, int x, int y, int color);
+int draw_world();
+void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
+
+// herrek
+int key_hook(int keycode, t_Cube *cube);
+void mv(t_Cube *cube, int keycode, float *direction_move);
+
+// values controls
+void initial_values(t_Cube *cube);
+int is_player(char player, int posx, int posy, t_Cube *cube);
+void give_me_map( t_Cube *cube);
+
+// DDA
+float wall_distance(t_Cube *cube, float ray_angle);
+int is_wall(char **map, int x, int y);
+
+#endif

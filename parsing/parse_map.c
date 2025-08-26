@@ -172,7 +172,6 @@ void    map_parsing(void)
 	j = 1;
 	map = cube()->parse->map->map;
 	valid = false;
-	print_map();
 	while (map[i])
 	{
 		j = 1;
@@ -186,7 +185,6 @@ void    map_parsing(void)
 			if (!ft_strchr("01NSEW ", map[i][j]))
 			{
 				ft_putstr_fd("Error: Invalid character in map\n", 2);
-				mlx_destroy_window(cube()->mlx->mlx, cube()->mlx->win);
 				gc_collect();
 				exit(1);
 			}
@@ -197,7 +195,6 @@ void    map_parsing(void)
 				{
 					printf("Error: Invalid map structure at (%d, %d)\n", i, j);
 					ft_putstr_fd("Error: Invalid map structure\n", 2);
-					mlx_destroy_window(cube()->mlx->mlx, cube()->mlx->win);
 					gc_collect();
 					exit(1);
 				}

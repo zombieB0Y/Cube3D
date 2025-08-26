@@ -17,15 +17,14 @@ ARGS_VALIDAT = argument_validation/__arg__.c
 
 FILE_READ = file_read/read_file.c file_read/read_file_utils.c file_read/read_map.c
 
-GET_LINE = get_line/get_line.c get_line/get_line_utils.c
+GET_LINE = get_line/get_line.c get_line/get_line_utils.c 
 
-PLAYER = player/drawing_player.c
 
-MAP_UTILES = map_utils/drawing_map.c
 
-PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c
+PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c 
+RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c 
 
-OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PLAYER:.c=.o) $(MAP_UTILES:.c=.o) $(PARSING:.c=.o)
+OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PARSING:.c=.o)  $(RAYCASTING:.c=.o)
 
 all: $(NAME)
 
