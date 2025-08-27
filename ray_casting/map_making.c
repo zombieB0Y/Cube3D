@@ -1,42 +1,23 @@
 #include "../cube.h"
 
-
-void give_me_map(t_Cube *cube)
+static void check_next(t_Cube *cube)
 {
-    int j;
-    int i;
-    char **map;
-
-    i = 0;
-    j = 0;
-    map = cube->parse->map->map;
-    while (map[i])
+    if (cube->sidedestx < cube->sidedesty)
     {
-        j = 0;
-        while (map[i][j])
-        {
-            if ((map[i][j] != '0') && (map[i][j] != '1') && (map[i][j] != ' ') && (map[i][j] != 's'))
-                is_player(map[i][j], j, i, cube);
-            j++;
-        }
-        i++;
+        cube->side = 1;
+        cube->mapx += cube->stepx;
+        cube->sidedestx += cube->deltadistx;
     }
-    cube->map = map;
+    else
+    {
+        cube->side = 0;
+        cube->mapy += cube->stepy;
+        cube->sidedesty += cube->deltadisty;
+    }
 }
 
-int is_wall(char **map, int x, int y)
+static void initial_side_distance(t_Cube *cube)
 {
-    return (map[y][x] == '1');
-}
-
-static void initial_wall_distance(t_Cube *cube, float ray_angle)
-{
-    cube->mapx = (int)(cube->posx);
-    cube->mapy = (int)(cube->posy);
-    cube->raydirx = cos(ray_angle * (PI_VALUE / 180));
-    cube->raydiry = sin(ray_angle * (PI_VALUE / 180));
-    cube->deltadistx = 1 / fabsf(cube->raydirx);
-    cube->deltadisty = 1 / fabsf(cube->raydiry);
     if (cube->raydirx > 0)
     {
         cube->stepx = 1;
@@ -57,6 +38,17 @@ static void initial_wall_distance(t_Cube *cube, float ray_angle)
         cube->sidedesty = (cube->posy - cube->mapy) * cube->deltadisty;
         cube->stepy = -1;
     }
+}
+
+static void initial_wall_distance(t_Cube *cube, float ray_angle)
+{
+    cube->mapx = (int)(cube->posx);
+    cube->mapy = (int)(cube->posy);
+    cube->raydirx = cos(ray_angle * (PI_VALUE / 180));
+    cube->raydiry = sin(ray_angle * (PI_VALUE / 180));
+    cube->deltadistx = 1 / fabsf(cube->raydirx);
+    cube->deltadisty = 1 / fabsf(cube->raydiry);
+    initial_side_distance(cube);
     cube->wallhit = 0;
 }
 
@@ -64,22 +56,11 @@ float wall_distance(t_Cube *cube, float ray_angle)
 {
     char **map;
 
-    map = cube->map;
+    map = cube->parse->map->map;
     initial_wall_distance(cube, ray_angle);
     while (cube->wallhit == 0)
     {
-        if (cube->sidedestx < cube->sidedesty)
-        {
-            cube->side = 1;
-            cube->mapx += cube->stepx;
-            cube->sidedestx += cube->deltadistx;
-        }
-        else
-        {
-            cube->side = 0;
-            cube->mapy += cube->stepy;
-            cube->sidedesty += cube->deltadisty;
-        }
+        check_next(cube);
         if (map[cube->mapy][cube->mapx] == '1')
         {
             cube->wallhit = 1;

@@ -3,12 +3,12 @@
 
 static int valid_key(int keycode)
 {
-	return ((keycode == LEFTKEY) || (keycode == RIGHTKEY) || (keycode == W_KEY) || (keycode == D_KEY) || (keycode == A_KEY) || (keycode == S_KEY));
+	return ((keycode == LEFTKEY) || (keycode == RIGHTKEY) || (keycode == W_KEY) || (keycode == D_KEY) || (keycode == A_KEY) || (keycode == S_KEY) || (keycode == ESC));
 
 }
 static int will_he_moves(float old_posx, float old_posy, t_Cube *cube, float direction_mov)
 {
-	if (is_wall(cube->map, (int)cube->posx, (int)cube->posy) || wall_distance(cube, direction_mov) <= 0.3)
+	if (is_wall(cube->parse->map->map, (int)cube->posx, (int)cube->posy) || wall_distance(cube, direction_mov) <= 0.3)
 	{
 		cube->posx = old_posx;
 		cube->posy = old_posy;
@@ -47,6 +47,8 @@ int key_hook(int keycode, t_Cube *cube)
 {
 	if (!valid_key(keycode))
 		return(0);
+	if (keycode == ESC)
+		destroy_window(cube);
 	void *old_image;
 	if (key_hook_helper(cube, keycode))
 	{

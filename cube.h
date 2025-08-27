@@ -39,6 +39,7 @@
 #define NORTH 90
 #define WEST 180
 #define SOUTH 270
+#define ESC 65307
 
 typedef struct t_GCNode
 {
@@ -161,7 +162,6 @@ typedef struct s_Cube
 	float walldist;
 	float lineheight;
 	int wallhit;
-	char **map;
 	t_cube_map cube_map;
 
 } t_Cube;
@@ -253,4 +253,8 @@ void give_me_map( t_Cube *cube);
 float wall_distance(t_Cube *cube, float ray_angle);
 int is_wall(char **map, int x, int y);
 
+
+// clean
+int destroy_window_helper(int code, t_Cube * cube);
+int destroy_window(t_Cube * cube);
 #endif
