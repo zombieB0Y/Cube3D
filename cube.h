@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/08/24 01:45:46 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/08/31 12:12:55 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ typedef struct s_texture
 	char *path;
 	int width;
 	int height;
+	int	bits_per_pixel;
+	int	line_length;
+	int	endian;
+	void	*img;
 	t_texture_type type;
 	bool loaded;
 } t_texture;
@@ -81,8 +85,10 @@ typedef struct s_texture
 typedef struct s_floor_ceiling
 {
 	char *floor_color;
+	t_color	*floor_rgb;
 	bool floor_color_loaded;
 	char *ceiling_color;
+	t_color	*ceiling_rgb;
 	bool ceiling_color_loaded;
 } t_floor_ceiling;
 
@@ -97,6 +103,7 @@ typedef struct s_parse
 {
 	t_texture *textures;
 	t_floor_ceiling *floor_ceiling;
+	
 	t_map *map;
 	int width;
 	int height;
@@ -192,18 +199,6 @@ void *ft_calloc(size_t count, size_t size);
 
 // Argument validation
 int validate_args(int ac, char **av);
-
-// player drawing
-void init_player(void);
-void move_player(int dx, int dy);
-void clear_player_area(int x, int y, int size);
-void draw_player_at_position(void);
-
-// map drawing
-void draw_map(void);
-void draw_tile(int x, int y, char tile);
-void draw_rectangle(int x, int y, int width, int height, int color);
-
 // File reading
 bool check_for_whitespace(char *line);
 void read_file(char *file_name);
@@ -220,10 +215,11 @@ void print_map(void);
 
 // Parsing functions
 void parse_textures(void);
-bool parse_color(char **tokens);
-void check_color_range(t_color *color);
+bool parse_color(char **tokens, char c);
+void check_color_range(t_color *color, char c);
 void map_parsing(void);
 int change_space(int X, int Y, int height, int width);
+long    convert_rgb(char c);
 
 // ************************************* ILYAS FUNCTIONS ******************************//
 // our global cube instance
@@ -236,7 +232,7 @@ void gc_collect(void);
 
 // rssem la bari trssem
 void create_map(t_Cube *cube);
-void img_pix_put(t_img *img, int x, int y, int color);
+void img_pix_put(t_img *img, int x, int y, long color);
 int draw_world();
 void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
 

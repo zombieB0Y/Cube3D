@@ -1,6 +1,6 @@
 #include "../cube.h"
 
-void img_pix_put(t_img *img, int x, int y, int color)
+void img_pix_put(t_img *img, int x, int y, long color)
 {
 	char *pixel;
 

@@ -1,6 +1,6 @@
 #include "../cube.h"
 
-bool	parse_color(char **tokens)
+bool	parse_color(char **tokens, char c)
 {
 	t_color	*color;
 
@@ -24,11 +24,11 @@ bool	parse_color(char **tokens)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	check_color_range(color);
+	check_color_range(color, c);
 	return (true);
 }
 
-void	check_color_range(t_color *color)
+void	check_color_range(t_color *color, char c)
 {
 	if (color->r < 0 || color->r > 255 ||
 		color->g < 0 || color->g > 255 ||
@@ -38,4 +38,8 @@ void	check_color_range(t_color *color)
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
+	if (c == 'f')
+		cube()->parse->floor_ceiling->floor_rgb = color;
+	else
+		cube()->parse->floor_ceiling->ceiling_rgb = color;
 }
