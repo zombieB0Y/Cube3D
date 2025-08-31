@@ -52,6 +52,12 @@ void	init_textures(void)
 {
 	cube()->parse->textures[0].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
 		cube()->parse->textures[0].path, &cube()->parse->textures[0].width, &cube()->parse->textures[0].height);
+	if (!cube()->parse->textures[0].img)
+	{
+		printf("shiit!\n");
+		gc_collect();
+		exit(1);
+	}
     cube()->parse->textures[1].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
 		cube()->parse->textures[1].path, &cube()->parse->textures[1].width, &cube()->parse->textures[1].height);
     cube()->parse->textures[2].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
@@ -76,6 +82,7 @@ int draw_world()
 	give_me_map(&cube_instance);
 	init_textures();
 	create_map(&cube_instance);
+	printf("%d/%d\n", cube()->parse->textures[0].width, cube()->parse->textures[0].height);
 
 	mlx_put_image_to_window(cube_instance.cube_map.mlx, cube_instance.cube_map.mlx_win, cube_instance.cube_map.img.mlx_img, 0, 0);
 	mlx_hook(cube_instance.cube_map.mlx_win, 2, 1L << 0, key_hook, &cube_instance);

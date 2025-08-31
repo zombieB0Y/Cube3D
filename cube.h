@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/08/31 12:12:55 by zm               ###   ########.fr       */
+/*   Updated: 2025/08/31 13:15:51 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ typedef struct s_map
 	char **map;
 	int width;
 	int height;
+	bool	is_player_there;
 } t_map;
 
 typedef struct s_parse
 {
 	t_texture *textures;
 	t_floor_ceiling *floor_ceiling;
-	
 	t_map *map;
 	int width;
 	int height;

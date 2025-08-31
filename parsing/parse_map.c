@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:05 by zm                #+#    #+#             */
-/*   Updated: 2025/08/24 02:41:57 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/08/31 13:22:19 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	itiraite_upward(char **map, int i, int j)
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
-		return (false);//                   110 001         100 001
+		return (false);
 	if (map[i - 1][j] == 's')
 		return (false);
 	return (true);
@@ -193,8 +193,25 @@ void    map_parsing(void)
 				valid = check_surrounding(map, i, j);
 				if (!valid)
 				{
-					printf("Error: Invalid map structure at (%d, %d)\n", i, j);
 					ft_putstr_fd("Error: Invalid map structure\n", 2);
+					gc_collect();
+					exit(1);
+				}
+			}
+			else if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' || map[i][j] == 'E')
+			{
+				if (!cube()->parse->map->is_player_there)
+					cube()->parse->map->is_player_there = true;
+				else
+				{
+					ft_putstr_fd("Error: Only One Player\n", 2);
+					gc_collect();
+					exit(1);
+				}
+				valid = check_surrounding(map, i, j);
+				if (!valid)
+				{
+					ft_putstr_fd("Error: Need a Valid Player Position\n", 2);
 					gc_collect();
 					exit(1);
 				}
@@ -202,5 +219,11 @@ void    map_parsing(void)
 			j++;
 		}
 		i++;
+	}
+	if (!cube()->parse->map->is_player_there)
+	{
+		ft_putstr_fd("Error: Need a Player\n", 2);
+		gc_collect();
+		exit(1);
 	}
 }
