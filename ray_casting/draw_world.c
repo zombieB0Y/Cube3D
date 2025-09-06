@@ -29,7 +29,7 @@ int get_texture_pixel(t_texture *texture, int x, int y)
 	char *pixel;
 	
 	if (!texture || !texture->addr || x < 0 || x >= texture->width || y < 0 || y >= texture->height)
-		return (0x808080); // Gray fallback color
+		return (0x808080);
 	pixel = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
 	return (*((int *)pixel));
 }
@@ -95,7 +95,6 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 			}
 			else
 			{
-				// Fallback colors when texture is not available
 				if (side)
 					color = 0xFF94F3;
 				else
@@ -144,8 +143,7 @@ void	init_textures(void)
 			cube()->parse->textures[i].path, &cube()->parse->textures[i].width, &cube()->parse->textures[i].height);
 		if (!cube()->parse->textures[i].img)
 		{
-			printf("Warning: Failed to load texture %d, using fallback\n", i);
-			// Set fallback values for when texture loading fails
+			printf("Failed to load texture %d\n", i);
 			cube()->parse->textures[i].width = 64;
 			cube()->parse->textures[i].height = 64;
 			cube()->parse->textures[i].img = NULL;
