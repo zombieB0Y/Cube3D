@@ -24,20 +24,84 @@ long    convert_rgb(char c)
 	return (color);
 }
 
+int get_texture_pixel(t_texture *texture, int x, int y)
+{
+	char *pixel;
+	
+	if (!texture || !texture->addr || x < 0 || x >= texture->width || y < 0 || y >= texture->height)
+		return (0x808080); // Gray fallback color
+	pixel = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+	return (*((int *)pixel));
+}
+
+int get_texture_index(int side, float raydirx, float raydiry)
+{
+	if (side == 1)
+	{
+		if (raydirx > 0)
+			return (TEXTURE_EAST);
+		else
+			return (TEXTURE_WEST);
+	}
+	else
+	{
+		if (raydiry > 0)
+			return (TEXTURE_SOUTH);
+		else
+			return (TEXTURE_NORTH);
+	}
+}
+
 void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int side)
 {
 	int pixel;
+	int texture_index;
+	t_texture *texture;
+	float wallx;
+	int texx;
+	int texy;
+	float step;
+	float texpos;
+	int color;
 
 	pixel = 0;
+	texture_index = get_texture_index(side, cube()->raydirx, cube()->raydiry);
+	texture = &cube()->parse->textures[texture_index];
+	
+	if (side == 1)
+		wallx = cube()->posy + cube()->walldist * cube()->raydiry;
+	else
+		wallx = cube()->posx + cube()->walldist * cube()->raydirx;
+	wallx -= floor(wallx);
+	
+	texx = (int)(wallx * (double)texture->width);
+	if (side == 1 && cube()->raydirx > 0)
+		texx = texture->width - texx - 1;
+	if (side == 0 && cube()->raydiry < 0)
+		texx = texture->width - texx - 1;
+	
+	step = 1.0 * texture->height / cube()->lineheight;
+	texpos = (start_line - screenHeight / 2 + cube()->lineheight / 2) * step;
+	
 	while (pixel < screenHeight - 1)
 	{
-
 		if (pixel >= start_line && pixel <= end_line)
 		{
-			if (side)
-				img_pix_put(&(cube1->img), x, pixel, 0xFF94F3);
+			if (texture->addr)
+			{
+				texy = (int)texpos & (texture->height - 1);
+				texpos += step;
+				color = get_texture_pixel(texture, texx, texy);
+			}
 			else
-				img_pix_put(&(cube1->img), x, pixel, 0xC742B6);
+			{
+				// Fallback colors when texture is not available
+				if (side)
+					color = 0xFF94F3;
+				else
+					color = 0xC742B6;
+			}
+			img_pix_put(&(cube1->img), x, pixel, color);
 		}
 		else if (pixel < start_line)
 			img_pix_put(&(cube1->img), x, pixel, convert_rgb('c'));
@@ -48,22 +112,46 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 	}
 }
 
+void	init_texture_addresses(void)
+{
+	int i;
+	
+	i = 0;
+	while (i < 4)
+	{
+		if (cube()->parse->textures[i].img)
+		{
+			cube()->parse->textures[i].addr = mlx_get_data_addr(cube()->parse->textures[i].img,
+				&cube()->parse->textures[i].bits_per_pixel, &cube()->parse->textures[i].line_length,
+				&cube()->parse->textures[i].endian);
+		}
+		else
+		{
+			cube()->parse->textures[i].addr = NULL;
+		}
+		i++;
+	}
+}
+
 void	init_textures(void)
 {
-	cube()->parse->textures[0].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
-		cube()->parse->textures[0].path, &cube()->parse->textures[0].width, &cube()->parse->textures[0].height);
-	if (!cube()->parse->textures[0].img)
+	int i;
+	
+	i = 0;
+	while (i < 4)
 	{
-		printf("shiit!\n");
-		gc_collect();
-		exit(1);
+		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
+			cube()->parse->textures[i].path, &cube()->parse->textures[i].width, &cube()->parse->textures[i].height);
+		if (!cube()->parse->textures[i].img)
+		{
+			printf("Warning: Failed to load texture %d, using fallback\n", i);
+			// Set fallback values for when texture loading fails
+			cube()->parse->textures[i].width = 64;
+			cube()->parse->textures[i].height = 64;
+			cube()->parse->textures[i].img = NULL;
+		}
+		i++;
 	}
-    cube()->parse->textures[1].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
-		cube()->parse->textures[1].path, &cube()->parse->textures[1].width, &cube()->parse->textures[1].height);
-    cube()->parse->textures[2].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
-		cube()->parse->textures[2].path, &cube()->parse->textures[2].width, &cube()->parse->textures[2].height);
-    cube()->parse->textures[3].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
-		cube()->parse->textures[3].path, &cube()->parse->textures[3].width, &cube()->parse->textures[3].height);
 }
 
 int draw_world()
@@ -79,10 +167,13 @@ int draw_world()
 		return (free(cube_instance.cube_map.mlx), 0);
 	cube_instance.cube_map.img.mlx_img = mlx_new_image(cube_instance.cube_map.mlx, screenWidth, screenHeight);
 	cube_instance.cube_map.img.addr = mlx_get_data_addr(cube_instance.cube_map.img.mlx_img, &cube_instance.cube_map.img.bpp, &cube_instance.cube_map.img.line_len, &cube_instance.cube_map.img.endian);
+	
+	
 	give_me_map(&cube_instance);
 	init_textures();
+	init_texture_addresses();
+	*(cube()) = cube_instance;
 	create_map(&cube_instance);
-	printf("%d/%d\n", cube()->parse->textures[0].width, cube()->parse->textures[0].height);
 
 	mlx_put_image_to_window(cube_instance.cube_map.mlx, cube_instance.cube_map.mlx_win, cube_instance.cube_map.img.mlx_img, 0, 0);
 	mlx_hook(cube_instance.cube_map.mlx_win, 2, 1L << 0, key_hook, &cube_instance);

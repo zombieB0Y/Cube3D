@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/08/31 13:15:51 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/06 16:53:47 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_texture
 	int	line_length;
 	int	endian;
 	void	*img;
+	char	*addr;
 	t_texture_type type;
 	bool loaded;
 } t_texture;
