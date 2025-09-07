@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/06 16:53:47 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/07 13:37:39 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_cube_map
 {
 	void *mlx;
 	void *mlx_win;
-	t_img img;
+	t_img *img;
 
 } t_cube_map;
 typedef struct point
@@ -170,7 +170,7 @@ typedef struct s_Cube
 	float walldist;
 	float lineheight;
 	int wallhit;
-	t_cube_map cube_map;
+	t_cube_map *cube_map;
 
 } t_Cube;
 
@@ -232,26 +232,26 @@ void *gc_malloc(size_t size);
 void gc_collect(void);
 
 // rssem la bari trssem
-void create_map(t_Cube *cube);
+void create_map();
 void img_pix_put(t_img *img, int x, int y, long color);
 int draw_world();
 void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
 
 // herrek
-int key_hook(int keycode, t_Cube *cube);
-void mv(t_Cube *cube, int keycode, float *direction_move);
+int key_hook(int keycode);
+void mv(int keycode, float *direction_move);
 
 // values controls
-void initial_values(t_Cube *cube);
-int is_player(char player, int posx, int posy, t_Cube *cube);
-void give_me_map( t_Cube *cube);
+// void initial_values(t_Cube *cube);
+int is_player(char player, int posx, int posy);
+void give_me_map();
 
 // DDA
-float wall_distance(t_Cube *cube, float ray_angle);
+float wall_distance(float ray_angle);
 int is_wall(char **map, int x, int y);
 
 
 // clean
-int destroy_window_helper(int code, t_Cube * cube);
-int destroy_window(t_Cube * cube);
+int destroy_window_helper(int code);
+int destroy_window();
 #endif

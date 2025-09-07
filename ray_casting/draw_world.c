@@ -54,6 +54,7 @@ int get_texture_index(int side, float raydirx, float raydiry)
 
 void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int side)
 {
+	// struct for norm
 	int pixel;
 	int texture_index;
 	t_texture *texture;
@@ -63,17 +64,15 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 	float step;
 	float texpos;
 	int color;
-
+	//-----------
 	pixel = 0;
 	texture_index = get_texture_index(side, cube()->raydirx, cube()->raydiry);
 	texture = &cube()->parse->textures[texture_index];
-	
 	if (side == 1)
 		wallx = cube()->posy + cube()->walldist * cube()->raydiry;
 	else
 		wallx = cube()->posx + cube()->walldist * cube()->raydirx;
 	wallx -= floor(wallx);
-	
 	texx = (int)(wallx * (double)texture->width);
 	if (side == 1 && cube()->raydirx > 0)
 		texx = texture->width - texx - 1;
@@ -89,7 +88,7 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 		{
 			if (texture->addr)
 			{
-				texy = (int)texpos & (texture->height - 1);
+				texy = (int)texpos & (texture->height - 1); // ayayayyyy
 				texpos += step;
 				color = get_texture_pixel(texture, texx, texy);
 			}
@@ -100,12 +99,12 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 				else
 					color = 0xC742B6;
 			}
-			img_pix_put(&(cube1->img), x, pixel, color);
+			img_pix_put(cube1->img, x, pixel, color);
 		}
 		else if (pixel < start_line)
-			img_pix_put(&(cube1->img), x, pixel, convert_rgb('c'));
+			img_pix_put(cube1->img, x, pixel, convert_rgb('c'));
 		else if (pixel > end_line)
-			img_pix_put(&(cube1->img), x, pixel, convert_rgb('f'));
+			img_pix_put(cube1->img, x, pixel, convert_rgb('f'));
 
 		pixel++;
 	}
@@ -139,7 +138,8 @@ void	init_textures(void)
 	i = 0;
 	while (i < 4)
 	{
-		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map.mlx,
+		printf("%s\n", cube()->parse->textures[i].path);
+		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map->mlx,
 			cube()->parse->textures[i].path, &cube()->parse->textures[i].width, &cube()->parse->textures[i].height);
 		if (!cube()->parse->textures[i].img)
 		{
@@ -154,28 +154,29 @@ void	init_textures(void)
 
 int draw_world()
 {
-	t_Cube cube_instance;
+	// t_Cube cube_instance;
 
-	cube_instance = *(cube());
-	cube_instance.cube_map.mlx = mlx_init();
-	if (!cube_instance.cube_map.mlx)
+	// cube_instance = *(cube());
+	cube()->cube_map = gc_malloc(sizeof(t_cube_map));
+	cube()->cube_map->mlx = mlx_init();
+	if (!cube()->cube_map->mlx)
 		return (0);
-	cube_instance.cube_map.mlx_win = mlx_new_window(cube_instance.cube_map.mlx, screenWidth, screenHeight, "Cube_3D");
-	if (!cube_instance.cube_map.mlx_win)
-		return (free(cube_instance.cube_map.mlx), 0);
-	cube_instance.cube_map.img.mlx_img = mlx_new_image(cube_instance.cube_map.mlx, screenWidth, screenHeight);
-	cube_instance.cube_map.img.addr = mlx_get_data_addr(cube_instance.cube_map.img.mlx_img, &cube_instance.cube_map.img.bpp, &cube_instance.cube_map.img.line_len, &cube_instance.cube_map.img.endian);
+	cube()->cube_map->mlx_win = mlx_new_window(cube()->cube_map->mlx, screenWidth, screenHeight, "Cube_3D");
+	cube()->cube_map->img = gc_malloc(sizeof(t_img));
+	if (!cube()->cube_map->mlx_win || !cube()->cube_map->img)
+		return (0);
+	cube()->cube_map->img->mlx_img = mlx_new_image(cube()->cube_map->mlx, screenWidth, screenHeight);
+	cube()->cube_map->img->addr = mlx_get_data_addr(cube()->cube_map->img->mlx_img, &cube()->cube_map->img->bpp, &cube()->cube_map->img->line_len, &cube()->cube_map->img->endian);
 	
-	
-	give_me_map(&cube_instance);
+	give_me_map();
 	init_textures();
 	init_texture_addresses();
-	*(cube()) = cube_instance;
-	create_map(&cube_instance);
+	// *(cube()) = cube_instance;
+	create_map();
 
-	mlx_put_image_to_window(cube_instance.cube_map.mlx, cube_instance.cube_map.mlx_win, cube_instance.cube_map.img.mlx_img, 0, 0);
-	mlx_hook(cube_instance.cube_map.mlx_win, 2, 1L << 0, key_hook, &cube_instance);
-	mlx_hook(cube_instance.cube_map.mlx_win, 17, 0, destroy_window, &cube_instance);
-	mlx_loop(cube_instance.cube_map.mlx);
+	mlx_put_image_to_window(cube()->cube_map->mlx, cube()->cube_map->mlx_win, cube()->cube_map->img->mlx_img, 0, 0);
+	mlx_hook(cube()->cube_map->mlx_win, 2, 1L << 0, key_hook, NULL);
+	mlx_hook(cube()->cube_map->mlx_win, 17, 0, destroy_window, NULL);
+	mlx_loop(cube()->cube_map->mlx);
 	return (1);
 }
