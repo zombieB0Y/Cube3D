@@ -28,8 +28,6 @@ int get_texture_pixel(t_texture *texture, int x, int y)
 {
 	char *pixel;
 	
-	if (!texture || !texture->addr || x < 0 || x >= texture->width || y < 0 || y >= texture->height)
-		return (0x808080);
 	pixel = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
 	return (*((int *)pixel));
 }
@@ -74,10 +72,10 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 		wallx = cube()->posx + cube()->walldist * cube()->raydirx;
 	wallx -= floor(wallx);
 	texx = (int)(wallx * (double)texture->width);
-	if (side == 1 && cube()->raydirx > 0)
-		texx = texture->width - texx - 1;
-	if (side == 0 && cube()->raydiry < 0)
-		texx = texture->width - texx - 1;
+	// if (side == 1 && cube()->raydirx > 0)
+	// 	texx = texture->width - texx - 1;
+	// if (side == 0 && cube()->raydiry < 0)
+	// 	texx = texture->width - texx - 1;
 	
 	step = 1.0 * texture->height / cube()->lineheight;
 	texpos = (start_line - screenHeight / 2 + cube()->lineheight / 2) * step;
@@ -138,7 +136,7 @@ void	init_textures(void)
 	i = 0;
 	while (i < 4)
 	{
-		printf("%s\n", cube()->parse->textures[i].path);
+		// printf("%s\n", cube()->parse->textures[i].path);
 		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map->mlx,
 			cube()->parse->textures[i].path, &cube()->parse->textures[i].width, &cube()->parse->textures[i].height);
 		if (!cube()->parse->textures[i].img)
