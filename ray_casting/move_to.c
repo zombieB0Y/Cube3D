@@ -2,8 +2,8 @@
 
 static void move_foward()
 {
-    cube()->posx += (float)(cos((cube()->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
-    cube()->posy += (float)(sin((cube()->direction * (float)(PI_VALUE / 180))) * MOVESPEED);
+    cube()->posx += (cos((cube()->direction * (PI_VALUE / 180))) * MOVESPEED);
+    cube()->posy += (sin((cube()->direction * (PI_VALUE / 180))) * MOVESPEED);
 }
 static void move_behind(float *direction_move)
 {

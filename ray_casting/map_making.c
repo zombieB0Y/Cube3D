@@ -88,6 +88,10 @@ void create_map()
         cube()->lineheight = screenWidth / cube()->walldist;
         cube()->drawstart = (screenHeight / 2) - (cube()->lineheight / 2);
         cube()->drawend = (screenHeight / 2) + (cube()->lineheight / 2);
+        if (cube()->drawstart < 0)
+            cube()->drawstart = 0;
+        if (cube()->drawend >= screenHeight)
+            cube()->drawend = screenHeight - 1;
         draw_in_image((cube()->cube_map), x, cube()->drawstart, cube()->drawend, cube()->side);
     }
 }

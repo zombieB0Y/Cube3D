@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/07 13:37:39 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/12 18:25:29 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ void give_me_map();
 
 // DDA
 float wall_distance(float ray_angle);
-int is_wall(char **map, int x, int y);
+int is_wall(char **map, float x, float y);
 
 
 // clean

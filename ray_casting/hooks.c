@@ -8,7 +8,7 @@ static int valid_key(int keycode)
 }
 static int will_he_moves(float old_posx, float old_posy, float direction_mov)
 {
-	if (is_wall(cube()->parse->map->map, (int)cube()->posx, (int)cube()->posy) || wall_distance(direction_mov) <= 0.3)
+	if (is_wall(cube()->parse->map->map, cube()->posx, cube()->posy) || wall_distance(direction_mov) <= 0.3)
 	{
 		cube()->posx = old_posx;
 		cube()->posy = old_posy;

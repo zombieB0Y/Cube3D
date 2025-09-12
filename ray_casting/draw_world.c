@@ -71,13 +71,9 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 	else
 		wallx = cube()->posx + cube()->walldist * cube()->raydirx;
 	wallx -= floor(wallx);
-	texx = (int)(wallx * (double)texture->width);
-	// if (side == 1 && cube()->raydirx > 0)
-	// 	texx = texture->width - texx - 1;
-	// if (side == 0 && cube()->raydiry < 0)
-	// 	texx = texture->width - texx - 1;
+	texx = (wallx * (double)texture->width);
 	
-	step = 1.0 * texture->height / cube()->lineheight;
+	step = texture->height / cube()->lineheight;
 	texpos = (start_line - screenHeight / 2 + cube()->lineheight / 2) * step;
 	
 	while (pixel < screenHeight - 1)
@@ -86,7 +82,7 @@ void draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line, int s
 		{
 			if (texture->addr)
 			{
-				texy = (int)texpos & (texture->height - 1); // ayayayyyy
+				texy = abs((int)texpos) % texture->height;
 				texpos += step;
 				color = get_texture_pixel(texture, texx, texy);
 			}

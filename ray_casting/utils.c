@@ -43,7 +43,31 @@ void give_me_map()
 	}
 }
 
-int is_wall(char **map, int x, int y)
+int is_wall(char **map, float x, float y)
 {
-	return (map[y][x] == '1');
+	double radius = 0.1; 
+    int map_x;
+    int map_y;
+
+    map_x = (int)(x - radius);
+    map_y = (int)(y - radius);
+    if (map_y < 0 || map_x < 0 || !map[map_y] || !map[map_y][map_x] || map[map_y][map_x] == '1')
+        return 1;
+
+    map_x = (int)(x + radius);
+    map_y = (int)(y - radius);
+    if (map_y < 0 || map_x < 0 || !map[map_y] || !map[map_y][map_x] || map[map_y][map_x] == '1')
+        return 1;
+
+    map_x = (int)(x - radius);
+    map_y = (int)(y + radius);
+    if (map_y < 0 || map_x < 0 || !map[map_y] || !map[map_y][map_x] || map[map_y][map_x] == '1')
+        return 1;
+
+    map_x = (int)(x + radius);
+    map_y = (int)(y + radius);
+    if (map_y < 0 || map_x < 0 || !map[map_y] || !map[map_y][map_x] || map[map_y][map_x] == '1')
+        return 1;
+
+    return 0; 
 }
