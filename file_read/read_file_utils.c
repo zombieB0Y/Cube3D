@@ -79,20 +79,14 @@ void	load_textures_or_colors(char **split_line)
 	{
 		if (cube()->parse->floor_ceiling->floor_color_loaded)
 			ft_putstr_fd("Error: Floor color already set\n", 2);
-		else
-		{
-			cube()->parse->floor_ceiling->floor_color = ft_strdup(split_line[1]);
+		else if (cube()->parse->floor_ceiling->floor_color)
 			cube()->parse->floor_ceiling->floor_color_loaded = true;
-		}
 	}
 	else if (ft_strcmp(split_line[0], "C") == 0)
 	{
 		if (cube()->parse->floor_ceiling->ceiling_color_loaded)
 			ft_putstr_fd("Error: Ceiling color already set\n", 2);
-		else
-		{
-			cube()->parse->floor_ceiling->ceiling_color = ft_strdup(split_line[1]);
+		else if (cube()->parse->floor_ceiling->ceiling_color)
 			cube()->parse->floor_ceiling->ceiling_color_loaded = true;
-		}
 	}
 }

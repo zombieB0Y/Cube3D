@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 17:54:23 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/27 14:17:13 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/14 16:39:37 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char	**split_words(char const *s, char c, char **result,
 		result[j] = make_word(s + i, c);
 		if (!result[j])
 			return (NULL);
+		// printf("word: %s\n", result[j]);
 		while (s[i] && s[i] != c)
 			i++;
 		j++;
@@ -114,7 +115,10 @@ static size_t	count_words1(char const *s, char c)
 			in_word = 0;
 		}
 		if (!ft_isdigit(*s) && *s != c)
+		{
+			printf("Invalid character found: %d\n", *s);
 			return (0);
+		}
 		s++;
 	}
 	if (i != 2)
@@ -122,7 +126,7 @@ static size_t	count_words1(char const *s, char c)
 	return (count);
 }
 
-static char	*make_word1(char const *s, char c)
+static char	*	make_word1(char const *s, char c)
 {
 	char	*word;
 	size_t	i;
@@ -159,6 +163,7 @@ static char	**split_words1(char const *s, char c, char **result,
 		result[j] = make_word1(s + i, c);
 		if (!result[j])
 			return (NULL);
+		printf("word: %s\n", result[j]);
 		while (s[i] && s[i] != c)
 			i++;
 		j++;
@@ -167,16 +172,22 @@ static char	**split_words1(char const *s, char c, char **result,
 	return (result);
 }
 
-char	**ft_split1(char const *s, char c)
+char	**ft_split1(char *s, char c)
 {
 	char	**result;
 	size_t	word_count;
 
 	if (!s)
 		return (NULL);
+	int i;
+
+	i = ft_strlen(s);
+	s[i - 1] = '\0';
+	// printf("string: %s", s);
 	word_count = count_words1(s, c);
 	if (!word_count)
 		return (NULL);
+	// printf("string\n");
 	result = (char **)gc_malloc(sizeof(char *) * (word_count + 1));
 	if (!result)
 		return (NULL);

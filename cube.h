@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/12 18:25:29 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/14 16:38:04 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int gcd(int a, int b);
 char **ft_split(char const *s, char c);
 int ft_atoi(const char *str);
 int ft_isdigit(int c);
-char **ft_split1(char const *s, char c);
+char **ft_split1(char *s, char c);
 char *ft_strchr(const char *s, int c);
 void *ft_calloc(size_t count, size_t size);
 

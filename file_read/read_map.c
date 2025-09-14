@@ -81,7 +81,7 @@ void    read_map(void)
 		}
 		if (valid)
 		{
-			ft_putstr_fd("Error: map must start with a valid line\n", 2);
+			ft_putstr_fd("Error: wawawa\n", 2);
 			gc_collect();
 			exit(EXIT_FAILURE);
 		}
