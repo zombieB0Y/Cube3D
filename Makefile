@@ -22,7 +22,7 @@ GET_LINE = get_line/get_line.c get_line/get_line_utils.c
 
 
 PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c 
-RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c ray_casting/clean_win.c 
+RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c ray_casting/clean_win.c ray_casting/ft_mlx.c ray_casting/textures.c 
 
 OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PARSING:.c=.o)  $(RAYCASTING:.c=.o)
 

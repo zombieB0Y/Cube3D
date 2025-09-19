@@ -23,6 +23,7 @@
 #include <stdbool.h>
 #include "get_line/get_line.h"
 
+#define WIN "Cube_3D"
 #define screenWidth 1300
 #define screenHeight 900
 #define UPKEY 65362
@@ -248,10 +249,22 @@ void give_me_map();
 
 // DDA
 float wall_distance(float ray_angle);
-int is_wall(char **map, float x, float y);
-
+int	is_wall(char **map, int x, int y);
 
 // clean
 int destroy_window_helper(int code);
 int destroy_window();
+
+// MLX_REFACTOR
+void  ft_mlx_new_image();
+void ft_mlx_get_data_addr();
+void ft_mlx_put_image_to_window();
+void ft_mlx_new_window();
+
+//texters
+void	init_textures(void);
+void	init_texture_addresses(void);
+int	get_texture_index(int side, float raydirx, float raydiry);
+int	get_texture_pixel(t_texture *texture, int x, int y);
+
 #endif
