@@ -42,65 +42,27 @@ void	add_border(void)
 	cube()->parse->map->map = new_map;
 }
 
-void    read_map(void)
+char	*get_tmp(void)
 {
-	char	*line;
-	char    *tmp;
-	bool    valid;
-
 	while (1)
 	{
-		tmp = get_next_line(cube()->fd);
-		if (!tmp)
+		cube()->parse->tmp = get_next_line(cube()->fd);
+		if (!cube()->parse->tmp)
 			break ;
-		if (!check_for_whitespace(tmp))
+		if (!check_for_whitespace(cube()->parse->tmp))
 			break ;
 	}
-	if (!tmp)
+	if (!cube()->parse->tmp)
 	{
 		ft_putstr_fd("Error: empty map file\n", 2);
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
-	valid = false;
-	while (1)
-	{
-		if (!tmp)
-			line = get_next_line(cube()->fd);
-		else
-		{
-			line = tmp;
-			tmp = NULL;
-		}
-		if (!line)
-			break ;
-		if (check_for_whitespace(line))
-		{
-			valid = true;
-			continue;
-		}
-		if (valid)
-		{
-			ft_putstr_fd("Error: wawawa\n", 2);
-			gc_collect();
-			exit(EXIT_FAILURE);
-		}
-		if (!cube()->parse->map->map)
-			cube()->parse->map->map = gc_malloc(sizeof(char *) * 1);
-		else
-			cube()->parse->map->map = ft_realloc(cube()->parse->map->map, sizeof(char *) * (cube()->parse->map->height),
-							sizeof(char *) * (cube()->parse->map->height + 2));
-		if (!cube()->parse->map->map)
-		{
-			gc_collect();
-			exit(EXIT_FAILURE);
-		}
-		ft_memset(line + ft_strlen(line) - 1, '\0', 1);
-		if (cube()->parse->map->width < (int)ft_strlen(line))
-			cube()->parse->map->width = ft_strlen(line);
-		cube()->parse->map->map[cube()->parse->map->height] = line;
-		cube()->parse->map->height++;
-	}
+	return (cube()->parse->tmp);
+}
+
+void	check_for_valid_map(void)
+{
 	if (cube()->parse->map->height == 0 || cube()->parse->map->width == 0)
 	{
 		ft_putstr_fd("Error: empty map\n", 2);
@@ -108,9 +70,64 @@ void    read_map(void)
 		exit(EXIT_FAILURE);
 	}
 	add_border();
-	printf("Map loaded successfully with width: %d and height: %d\n",
-	cube()->parse->map->width, cube()->parse->map->height);
 }
+void	init_line()
+{
+
+	if (!cube()->parse->tmp)
+		cube()->parse->line = get_next_line(cube()->fd);
+	else
+	{
+		cube()->parse->line = cube()->parse->tmp;
+		cube()->parse->tmp = NULL;
+	}
+}
+void	alloc_space(bool valid)
+{
+	if (valid)
+	{
+		ft_putstr_fd("Error: wawawa\n", 2);
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	if (!cube()->parse->map->map)
+		cube()->parse->map->map = gc_malloc(sizeof(char *) * 1);
+	else
+		cube()->parse->map->map = ft_realloc(cube()->parse->map->map, sizeof(char *) * (cube()->parse->map->height),
+						sizeof(char *) * (cube()->parse->map->height + 2));
+	if (!cube()->parse->map->map)
+	{
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+}
+
+void    read_map(void)
+{
+	bool    valid;
+
+	get_tmp();
+	valid = false;
+	while (1)
+	{
+		init_line(cube()->parse->tmp);
+		if (!cube()->parse->line)
+			break ;
+		if (check_for_whitespace(cube()->parse->line))
+		{
+			valid = true;
+			continue;
+		}
+		alloc_space(valid);
+		ft_memset(cube()->parse->line + ft_strlen(cube()->parse->line) - 1, '\0', 1);
+		if (cube()->parse->map->width < (int)ft_strlen(cube()->parse->line))
+			cube()->parse->map->width = ft_strlen(cube()->parse->line);
+		cube()->parse->map->map[cube()->parse->map->height] = cube()->parse->line;
+		cube()->parse->map->height++;
+	}
+	check_for_valid_map();
+}
+
 void	print_map(void)
 {
 	int i;

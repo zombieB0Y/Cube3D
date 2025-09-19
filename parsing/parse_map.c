@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:05 by zm                #+#    #+#             */
-/*   Updated: 2025/08/31 13:22:19 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/19 21:18:40 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,68 +97,64 @@ int is_empty(t_queue *q)
 	return (q->front > q->back);
 }
 
+
+
+
 int	change_space(int X, int Y, int height, int width)
 {
-    t_point *directions;
-    t_point point;
-    t_point curr;
-    int i;
-    int sx;
-    int sy;
-    char c;
-    t_queue q;
-	bool **visited;
-    point.x = X;
-    point.y = Y;
+	t_cs	cs;
+
+	cs.point.x = X;
+	cs.point.y = Y;
 	// norm habek !!
-    i = 0;
-	directions = gc_malloc(sizeof(t_point) * 4);
-	visited = gc_malloc(sizeof(bool*) * (height));
-	if (!directions || !visited)
+	cs.i = 0;
+	cs.directions = gc_malloc(sizeof(t_point) * 4);
+	cs.visited = gc_malloc(sizeof(bool*) * (height));
+	if (!cs.directions || !cs.visited)
 		return (0);
-    directions[0] = (t_point){0, 1};
-    directions[1] = (t_point){1, 0};
-    directions[2] = (t_point){0, -1};
-    directions[3] = (t_point){-1, 0};
-    while (i < (height))
-    {
-        visited[i] = ft_calloc(width, sizeof(bool));
-        if (!visited[i])
-            return (0);
-        i++;
-    }
-    if (init_queue(&q, (height * width)) == 0)
-        return (0);
-    add_in_queue(&q, point);
-    visited[X][Y] = true;
-    
-    while (!is_empty(&q))
-    {
-        curr = out_of_queue(&q);
-        if (cube()->parse->map->map[curr.x][curr.y] == ' ')
-            cube()->parse->map->map[curr.x][curr.y] = 's';
-        
-        i = 0;
-        while (i < 4)
-        {
-            sx = curr.x + directions[i].x;
-            sy = curr.y + directions[i].y;
-            if (sx >= 0 && sx < height && sy >= 0 && sy < width)
-            {
-                c = cube()->parse->map->map[sx][sy];
-                if (!visited[sx][sy] && c != '1' && c != '0' && 
-                    c != 'N' && c != 'E' && c != 'W' && c != 'S')
-                {
-                    visited[sx][sy] = true;
-                    point.x = sx;
-                    point.y = sy;
-                    add_in_queue(&q, point);
-                }
-            }
-            i++;
-        }
-    }
-    return (1);
+	cs.directions[0] = (t_point){0, 1};
+	cs.directions[1] = (t_point){1, 0};
+	cs.directions[2] = (t_point){0, -1};
+	cs.directions[3] = (t_point){-1, 0};
+	while (cs.i < (height))
+	{
+		cs.visited[cs.i] = ft_calloc(width, sizeof(bool));
+		if (!cs.visited[cs.i])
+			return (0);
+		cs.i++;
+	}
+	if (init_queue(&cs.q, (height * width)) == 0)
+		return (0);
+	add_in_queue(&cs.q, cs.point);
+	cs.visited[X][Y] = true;
+	
+	while (!is_empty(&cs.q))
+	{
+		cs.curr = out_of_queue(&cs.q);
+		if (cube()->parse->map->map[cs.curr.x][cs.curr.y] == ' ')
+			cube()->parse->map->map[cs.curr.x][cs.curr.y] = 's';
+		
+		cs.i = 0;
+		while (cs.i < 4)
+		{
+			cs.sx = cs.curr.x + cs.directions[cs.i].x;
+			cs.sy = cs.curr.y + cs.directions[cs.i].y;
+			if (cs.sx >= 0 && cs.sx < height && cs.sy >= 0 && cs.sy < width)
+			{
+				cs.c = cube()->parse->map->map[cs.sx][cs.sy];
+				if (!cs.visited[cs.sx][cs.sy] && cs.c != '1' && cs.c != '0' && 
+					cs.c != 'N' && cs.c != 'E' && cs.c != 'W' && cs.c != 'S')
+				{
+					cs.visited[cs.sx][cs.sy] = true;
+					cs.point.x = cs.sx;
+					cs.point.y = cs.sy;
+					add_in_queue(&cs.q, cs.point);
+				}
+			}
+			cs.i++;
+		}
+	}
+	return (1);
 }
 
 void    map_parsing(void)

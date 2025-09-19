@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/14 16:38:04 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/19 21:36:05 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct s_map
 
 typedef struct s_parse
 {
+	char	*line;
+	char	*tmp;
 	t_texture *textures;
 	t_floor_ceiling *floor_ceiling;
 	t_map *map;
@@ -175,6 +177,18 @@ typedef struct s_Cube
 
 } t_Cube;
 
+typedef struct s_cs
+{
+    t_point	*directions;
+    t_point	point;
+    t_point	curr;
+    int		i;
+    int		sx;
+    int		sy;
+    char	c;
+    t_queue	q;
+	bool	**visited;
+}	t_cs;
 
 // Memory management functions
 void gc_register(void *ptr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:07:59 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/14 16:12:58 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/19 21:06:35 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int main(int ac, char **av)
 	if (validate_args(ac, av))
 		return (1);
 	read_file(av[1]);
-	// printf("%s\n", cube()->parse->floor_ceiling->floor_color);
-
-	printf("floor color: %s\n", cube()->parse->floor_ceiling->floor_color);
-	printf("ceiling color: %s\n", cube()->parse->floor_ceiling->ceiling_color);
 	parse_color(ft_split1(cube()->parse->floor_ceiling->floor_color, ','), 'f');
 	parse_color(ft_split1(cube()->parse->floor_ceiling->ceiling_color, ','), 'c');
 	parse_textures();
