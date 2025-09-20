@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   cube.h											 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: zoentifi <zoentifi@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/06/29 15:03:14 by zoentifi		  #+#	#+#			 */
-/*   Updated: 2025/09/20 20:22:56 by zoentifi		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/09/20 20:22:56 by zoentifi         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
@@ -24,8 +24,8 @@
 # include "get_line/get_line.h"
 
 # define WIN "Cube_3D"
-# define screenWidth 1300
-# define screenHeight 900
+# define SCREEN_WIDTH 1300
+# define SCREEN_HEIGHT 900
 # define UPKEY 65362
 # define DOWNKEY 65364
 # define LEFTKEY 65361
@@ -271,7 +271,7 @@ bool parse_color(char **tokens, char c);
 void check_color_range(t_color *color, char c);
 void map_parsing(void);
 int change_space(int X, int Y, int height, int width);
-long	convert_rgb(char c);
+long    convert_rgb(char c);
 void	check_player(void);
 void	init_directions(t_point *directions);
 void	check_for_invalid_char(int i, int j);

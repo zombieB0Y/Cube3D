@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:04:27 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/28 14:22:01 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/20 20:59:30 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	gc_register(void *ptr)
 {
-	t_GCNode	*node;
+	t_gcnode	*node;
 
 	if (!ptr)
 		return ;
-	node = malloc(sizeof(t_GCNode));
+	node = malloc(sizeof(t_gcnode));
 	if (!node)
 		return ;
 	node->ptr = ptr;
@@ -40,8 +40,8 @@ void	*gc_malloc(size_t size)
 
 void	gc_collect(void)
 {
-	t_GCNode	*current;
-	t_GCNode	*next;
+	t_gcnode	*current;
+	t_gcnode	*next;
 
 	current = cube()->g_head;
 	while (current)

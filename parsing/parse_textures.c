@@ -1,4 +1,16 @@
-# include "../cube.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_textures.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/20 19:30:00 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/09/20 20:59:30 by zoentifi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../cube.h"
 
 void	parse_textures(void)
 {
@@ -27,15 +39,18 @@ bool	check_for_valid_texture(void)
 		return (false);
 	return (true);
 }
+
 bool	check_each_texture(int id)
 {
-	int fd;
+	int	fd;
 
 	fd = open(cube()->parse->textures[id].path, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Texture %d not found: '%s'\n", id, cube()->parse->textures[id].path);
+		printf("Texture %d not found: '%s'\n", id,
+			cube()->parse->textures[id].path);
 		return (false);
 	}
+	close(fd);
 	return (true);
 }

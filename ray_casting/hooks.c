@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/20 21:00:12 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/09/20 21:05:44 by zoentifi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 static int	valid_key(int keycode)
@@ -49,7 +61,7 @@ int	key_hook(int keycode)
 	if (!valid_key(keycode))
 		return (0);
 	if (keycode == ESC)
-		destroy_window(cube);
+		destroy_window();
 	if (key_hook_helper(keycode))
 	{
 		old_image = cube()->cube_map->img->mlx_img;
@@ -57,7 +69,7 @@ int	key_hook(int keycode)
 		ft_mlx_get_data_addr();
 		if (old_image)
 			mlx_destroy_image(cube()->cube_map->mlx, old_image);
-		create_map(cube);
+		create_map();
 		ft_mlx_put_image_to_window();
 	}
 	else if (keycode == 65307)

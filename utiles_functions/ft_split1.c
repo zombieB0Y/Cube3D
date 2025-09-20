@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 19:34:07 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 20:27:39 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/20 20:37:04 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static size_t	count_words1(char const *s, char c)
 	return (count);
 }
 
-static char	*	make_word1(char const *s, char c)
+static char	*make_word1(char const *s, char c)
 {
 	char	*word;
 	size_t	i;
