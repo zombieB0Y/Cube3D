@@ -15,13 +15,13 @@ UTILES = utiles_functions/ft_strlen.c utiles_functions/ft_strcmp.c utiles_functi
 
 ARGS_VALIDAT = argument_validation/__arg__.c
 
-FILE_READ = file_read/read_file.c file_read/read_file_utils.c file_read/read_map.c
+FILE_READ = file_read/read_file.c file_read/read_file_utils.c file_read/read_map.c file_read/file_utils.c file_read/map_utils.c
 
 GET_LINE = get_line/get_line.c get_line/get_line_utils.c 
 
 
 
-PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c 
+PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c parsing/map_validation.c parsing/queue_utils.c parsing/parse_map_utils.c
 RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c ray_casting/clean_win.c ray_casting/ft_mlx.c ray_casting/textures.c 
 
 OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PARSING:.c=.o)  $(RAYCASTING:.c=.o)

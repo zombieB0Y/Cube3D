@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/19 21:36:05 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/20 06:21:16 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_parse
 {
 	char	*line;
 	char	*tmp;
+	char	**new_map;
 	t_texture *textures;
 	t_floor_ceiling *floor_ceiling;
 	t_map *map;
@@ -222,12 +223,39 @@ void read_textures_colors(char *file_name);
 void check_textures(void);
 bool check_for_valid_texture(void);
 bool check_each_texture(int id);
-int size_2d(char **arr);
 bool check_if_valid(char **split_line);
 void load_textures_or_colors(char **split_line);
 void print_textures_colors(void);
 void read_map(void);
 void print_map(void);
+void load_floor_ceiling_colors(char **split_line);
+bool is_it_loaded(void);
+void init_parse(void);
+
+// File utilities
+int size_2d(char **arr);
+void checking_split_line(char **split_line);
+
+// Map utilities
+void init_new_map(void);
+void init_line(void);
+void alloc_space(bool valid);
+void add_border(void);
+char *get_tmp(void);
+void check_for_valid_map(void);
+
+// Map validation
+bool itiraite_foward(char **map, int i, int j);
+bool itiraite_backward(char **map, int i, int j);
+bool itiraite_upward(char **map, int i, int j);
+bool itiraite_downward(char **map, int i, int j);
+bool check_surrounding(char **map, int i, int j);
+
+// Queue utilities
+int init_queue(t_queue *q, int capacity);
+void add_in_queue(t_queue *q, t_point point);
+t_point out_of_queue(t_queue *q);
+int is_empty(t_queue *q);
 
 // Parsing functions
 void parse_textures(void);
@@ -236,6 +264,10 @@ void check_color_range(t_color *color, char c);
 void map_parsing(void);
 int change_space(int X, int Y, int height, int width);
 long    convert_rgb(char c);
+void	check_player(void);
+void	init_directions(t_point *directions);
+void	check_for_invalid_char(int i, int j);
+void	validate_surrounding(int i, int j, bool valid);
 
 // ************************************* ILYAS FUNCTIONS ******************************//
 // our global cube instance
@@ -266,8 +298,9 @@ float wall_distance(float ray_angle);
 int	is_wall(char **map, int x, int y);
 
 // clean
-int destroy_window_helper(int code);
-int destroy_window();
+int		destroy_window_helper(int code);
+int		destroy_window();
+void	destroy_texture();
 
 // MLX_REFACTOR
 void  ft_mlx_new_image();
@@ -275,10 +308,10 @@ void ft_mlx_get_data_addr();
 void ft_mlx_put_image_to_window();
 void ft_mlx_new_window();
 
-//texters
+//textures
 void	init_textures(void);
 void	init_texture_addresses(void);
-int	get_texture_index(int side, float raydirx, float raydiry);
-int	get_texture_pixel(t_texture *texture, int x, int y);
+int		get_texture_index(int side, float raydirx, float raydiry);
+int		get_texture_pixel(t_texture *texture, int x, int y);
 
 #endif

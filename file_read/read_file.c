@@ -6,23 +6,11 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/19 20:50:12 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/20 00:00:00 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
-
-int	size_2d(char **arr)
-{
-	int i;
-
-	if (!arr)
-		return (0);
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
 
 void	load_floor_ceiling_colors(char **split_line)
 {
@@ -39,31 +27,6 @@ void	load_floor_ceiling_colors(char **split_line)
 			cube()->parse->floor_ceiling->ceiling_color = ft_strjoin(cube()->parse->floor_ceiling->ceiling_color, split_line[i]);
 		i++;
 	}
-}
-
-void	checking_split_line(char **split_line)
-{
-	if (!split_line)
-	{
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
-	if (split_line[0][0] == 'F' || split_line[0][0] == 'C')
-		load_floor_ceiling_colors(split_line);
-	else if (size_2d(split_line) != 2)
-	{
-		ft_putstr_fd("Error: invalid texture line\n", 2);
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
-	else if (!check_if_valid(split_line))
-	{
-		ft_putstr_fd("Error: Invalid texture line\n", 2);
-		gc_collect();
-		exit(EXIT_FAILURE);
-	}
-	load_textures_or_colors(split_line);
-
 }
 
 bool	is_it_loaded(void)
@@ -102,7 +65,6 @@ void	read_textures_colors(char *file_name)
 		checking_split_line(split_line);
 	}
 }
-
 
 void	init_parse(void)
 {
@@ -146,5 +108,4 @@ void    read_file(char *file_name)
 	}
 	ft_memset(cube()->parse->map, 0, sizeof(t_map));
 	read_map();
-	
 }

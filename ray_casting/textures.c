@@ -116,11 +116,21 @@ void	init_texture_addresses(void)
 																&cube()->parse->textures[i].bits_per_pixel,
 																&cube()->parse->textures[i].line_length,
 																&cube()->parse->textures[i].endian);
+			gc_register(cube()->parse->textures[i].addr);
 		}
 		else
-		{
 			cube()->parse->textures[i].addr = NULL;
-		}
+		i++;
+	}
+}
+void	destroy_texture()
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		mlx_destroy_image(cube()->cube_map->mlx, cube()->parse->textures[i].img);
 		i++;
 	}
 }
@@ -143,6 +153,7 @@ void	init_textures(void)
 			cube()->parse->textures[i].height = 64;
 			cube()->parse->textures[i].img = NULL;
 		}
+		// gc_register(cube()->parse->textures[i].img);
 		i++;
 	}
 }
