@@ -1,27 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/20 19:30:25 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/09/20 20:11:46 by zoentifi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
-
-long	convert_rgb(char c)
-{
-	long	color;
-	int		r;
-	int		g;
-	int		b;
-
-	if (c == 'c')
-	{
-		r = cube()->parse->floor_ceiling->ceiling_rgb->r;
-		g = cube()->parse->floor_ceiling->ceiling_rgb->g;
-		b = cube()->parse->floor_ceiling->ceiling_rgb->b;
-	}
-	else
-	{
-		r = cube()->parse->floor_ceiling->floor_rgb->r;
-		g = cube()->parse->floor_ceiling->floor_rgb->g;
-		b = cube()->parse->floor_ceiling->floor_rgb->b;
-	}
-	color = (r * 65536) + (g * 256) + b;
-	return (color);
-}
 
 int	get_texture_pixel(t_texture *texture, int x, int y)
 {
@@ -50,110 +39,45 @@ int	get_texture_index(int side, float raydirx, float raydiry)
 	}
 }
 
-void	draw_in_image(t_cube_map *cube1, int x, int start_line, int end_line,
-		int side)
+void	floor_or_ceiling(t_draw_norm vars, int x, int start_line, int end_line)
 {
-	int			pixel;
-	int			texture_index;
-	t_texture	*texture;
-	float		wallx;
-	int			texx;
-	int			texy;
-	float		step;
-	float		texpos;
-	int			color;
+	if (vars.pixel < start_line)
+		img_pix_put(cube()->cube_map->img, x, vars.pixel, convert_rgb('c'));
+	else if (vars.pixel > end_line)
+		img_pix_put(cube()->cube_map->img, x, vars.pixel, convert_rgb('f'));
+}
 
-	// struct for norm
-	//-----------
-	pixel = 0;
-	texture_index = get_texture_index(side, cube()->raydirx, cube()->raydiry);
-	texture = &cube()->parse->textures[texture_index];
-	if (side == 1)
-		wallx = cube()->posy + cube()->walldist * cube()->raydiry;
-	else
-		wallx = cube()->posx + cube()->walldist * cube()->raydirx;
-	wallx -= floor(wallx);
-	texx = (wallx * (double)texture->width);
-	step = texture->height / cube()->lineheight;
-	texpos = (start_line - screenHeight / 2 + cube()->lineheight / 2) * step;
-	while (pixel < screenHeight - 1)
+void	get_texture_color(t_draw_norm *vars, int side)
+{
+	if (vars->texture->addr)
 	{
-		if (pixel >= start_line && pixel <= end_line)
-		{
-			if (texture->addr)
-			{
-				texy = abs((int)texpos) % texture->height;
-				texpos += step;
-				color = get_texture_pixel(texture, texx, texy);
-			}
-			else
-			{
-				if (side)
-					color = 0xFF94F3;
-				else
-					color = 0xC742B6;
-			}
-			img_pix_put(cube1->img, x, pixel, color);
-		}
-		else if (pixel < start_line)
-			img_pix_put(cube1->img, x, pixel, convert_rgb('c'));
-		else if (pixel > end_line)
-			img_pix_put(cube1->img, x, pixel, convert_rgb('f'));
-		pixel++;
+		vars->texy = abs((int)vars->texpos) % vars->texture->height;
+		vars->texpos += vars->step;
+		vars->color = get_texture_pixel(vars->texture, vars->texx, vars->texy);
+	}
+	else
+	{
+		if (side)
+			vars->color = 0xFF94F3;
+		else
+			vars->color = 0xC742B6;
 	}
 }
 
-void	init_texture_addresses(void)
+void	draw_in_image(int x, int start_line, int end_line, int side)
 {
-	int	i;
+	t_draw_norm	vars;
 
-	i = 0;
-	while (i < 4)
+	init_draw_vars(&vars, side, start_line);
+	while (vars.pixel < screenHeight - 1)
 	{
-		if (cube()->parse->textures[i].img)
+		if (vars.pixel >= start_line && vars.pixel <= end_line)
 		{
-			cube()->parse->textures[i].addr = mlx_get_data_addr(cube()->parse->textures[i].img,
-																&cube()->parse->textures[i].bits_per_pixel,
-																&cube()->parse->textures[i].line_length,
-																&cube()->parse->textures[i].endian);
-			gc_register(cube()->parse->textures[i].addr);
+			get_texture_color(&vars, side);
+			img_pix_put(cube()->cube_map->img, x, vars.pixel, vars.color);
 		}
 		else
-			cube()->parse->textures[i].addr = NULL;
-		i++;
-	}
-}
-void	destroy_texture()
-{
-	int i;
-
-	i = 0;
-	while (i < 4)
-	{
-		mlx_destroy_image(cube()->cube_map->mlx, cube()->parse->textures[i].img);
-		i++;
-	}
-}
-
-void	init_textures(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map->mlx,
-																cube()->parse->textures[i].path,
-																&cube()->parse->textures[i].width,
-																&cube()->parse->textures[i].height);
-		if (!cube()->parse->textures[i].img)
-		{
-			printf("Failed to load texture %d\n", i);
-			cube()->parse->textures[i].width = 64;
-			cube()->parse->textures[i].height = 64;
-			cube()->parse->textures[i].img = NULL;
-		}
-		// gc_register(cube()->parse->textures[i].img);
-		i++;
+			floor_or_ceiling(vars, x, start_line, end_line);
+		vars.pixel++;
 	}
 }

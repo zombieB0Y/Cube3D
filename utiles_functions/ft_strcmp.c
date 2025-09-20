@@ -6,13 +6,13 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 16:46:47 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/29 16:55:24 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:13:47 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	if (!s1 || !s2)
 		return (-1);

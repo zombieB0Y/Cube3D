@@ -11,7 +11,7 @@ SRCS = cube.c gc.c $(UTILES) $(ARGS_VALIDAT) $(FILE_READ)
 UTILES = utiles_functions/ft_strlen.c utiles_functions/ft_strcmp.c utiles_functions/ft_putstr_fd.c \
 		utiles_functions/ft_realloc.c utiles_functions/ft_memcpy.c utiles_functions/ft_strdup.c utiles_functions/ft_memset.c \
 		utiles_functions/ft_isspace.c utiles_functions/ft_strncmp.c utiles_functions/gcd.c utiles_functions/ft_split.c \
-		utiles_functions/ft_atoi.c utiles_functions/ft_strchr.c utiles_functions/ft_calloc.c
+		utiles_functions/ft_atoi.c utiles_functions/ft_strchr.c utiles_functions/ft_calloc.c utiles_functions/ft_split1.c
 
 ARGS_VALIDAT = argument_validation/__arg__.c
 
@@ -22,7 +22,7 @@ GET_LINE = get_line/get_line.c get_line/get_line_utils.c
 
 
 PARSING = parsing/parse_map.c parsing/parse_textures.c parsing/parse_colors.c parsing/map_validation.c parsing/queue_utils.c parsing/parse_map_utils.c
-RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c ray_casting/clean_win.c ray_casting/ft_mlx.c ray_casting/textures.c 
+RAYCASTING =  ray_casting/map_making.c ray_casting/draw_world.c ray_casting/utils.c ray_casting/hooks.c ray_casting/move_to.c ray_casting/clean_win.c ray_casting/ft_mlx.c ray_casting/textures.c ray_casting/textures_helper.c
 
 OBJS = $(SRCS:.c=.o) $(GET_LINE:.c=.o) $(PARSING:.c=.o)  $(RAYCASTING:.c=.o)
 

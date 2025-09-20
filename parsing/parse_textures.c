@@ -34,7 +34,7 @@ bool	check_each_texture(int id)
 	fd = open(cube()->parse->textures[id].path, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("Error: Texture %d not found: '%s'\n", id, cube()->parse->textures[id].path);
+		printf("Texture %d not found: '%s'\n", id, cube()->parse->textures[id].path);
 		return (false);
 	}
 	return (true);

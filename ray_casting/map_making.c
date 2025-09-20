@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_making.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/20 19:30:41 by zoentifi          #+#    #+#             */
+/*   Updated: 2025/09/20 19:47:43 by zoentifi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 static void	check_next(void)
@@ -103,7 +115,7 @@ void	create_map(void)
 			cube()->drawstart = 0;
 		if (cube()->drawend >= screenHeight)
 			cube()->drawend = screenHeight - 1;
-		draw_in_image((cube()->cube_map), x, cube()->drawstart, cube()->drawend,
+		draw_in_image(x, cube()->drawstart, cube()->drawend,
 			cube()->side);
 	}
 }

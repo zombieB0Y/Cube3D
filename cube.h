@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 15:03:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 06:21:16 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/20 20:22:56 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,19 @@ typedef struct s_cs
 	bool	**visited;
 }	t_cs;
 
+typedef struct s_draw_norm
+{
+	int			pixel;
+	int			texture_index;
+	t_texture	*texture;
+	float		wallx;
+	int			texx;
+	int			texy;
+	float		step;
+	float		texpos;
+	int			color;
+}	t_draw_norm;
+
 // Memory management functions
 void gc_register(void *ptr);
 void *gc_malloc(size_t size);
@@ -273,16 +286,11 @@ void	validate_surrounding(int i, int j, bool valid);
 // our global cube instance
 t_Cube *cube(void);
 
-// Memory management functions
-void gc_register(void *ptr);
-void *gc_malloc(size_t size);
-void gc_collect(void);
-
 // rssem la bari trssem
 void create_map();
 void img_pix_put(t_img *img, int x, int y, long color);
 int draw_world();
-void draw_in_image(t_cube_map *cube, int x, int start_line, int end_line, int side);
+void draw_in_image(int x, int start_line, int end_line, int side);
 
 // herrek
 int key_hook(int keycode);
@@ -313,5 +321,8 @@ void	init_textures(void);
 void	init_texture_addresses(void);
 int		get_texture_index(int side, float raydirx, float raydiry);
 int		get_texture_pixel(t_texture *texture, int x, int y);
+void	init_draw_vars(t_draw_norm *vars, int side, int start_line);
+void	get_texture_color(t_draw_norm *vars, int side);
+void	floor_or_ceiling(t_draw_norm vars, int x, int start_line, int end_line);
 
 #endif
