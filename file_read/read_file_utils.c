@@ -27,12 +27,12 @@ bool	check_if_valid(char **split_line)
 {
 	if (!split_line || !split_line[0] || !split_line[1])
 		return (false);
-	if (ft_strcmp(split_line[0], "NO") != 0 &&
-		ft_strcmp(split_line[0], "SO") != 0 &&
-		ft_strcmp(split_line[0], "WE") != 0 &&
-		ft_strcmp(split_line[0], "EA") != 0 &&
-		ft_strcmp(split_line[0], "F") != 0 &&
-		ft_strcmp(split_line[0], "C") != 0)
+	if (ft_strcmp(split_line[0], "NO") != 0
+		&& ft_strcmp(split_line[0], "SO") != 0
+		&& ft_strcmp(split_line[0], "WE") != 0
+		&& ft_strcmp(split_line[0], "EA") != 0
+		&& ft_strcmp(split_line[0], "F") != 0
+		&& ft_strcmp(split_line[0], "C") != 0)
 		return (false);
 	if (ft_strlen(split_line[1]) == 0)
 		return (false);

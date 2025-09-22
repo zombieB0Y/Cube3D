@@ -50,6 +50,12 @@ void	init_line()
 	}
 }
 
+void	expand_map(char **map, int old_height, int old_width)
+{
+		cube()->parse->map->map = ft_realloc(map, sizeof(char *) * (old_height),
+						sizeof(char *) * (old_height + 2));
+}
+
 void	alloc_space(bool valid)
 {
 	if (valid)
@@ -61,10 +67,10 @@ void	alloc_space(bool valid)
 	if (!cube()->parse->map->map)
 		cube()->parse->map->map = gc_malloc(sizeof(char *) * 1);
 	else
-		cube()->parse->map->map = ft_realloc(cube()->parse->map->map, sizeof(char *) * (cube()->parse->map->height),
-						sizeof(char *) * (cube()->parse->map->height + 2));
+		expand_map(cube()->parse->map->map, cube()->parse->map->height,
+			cube()->parse->map->width);
 	if (!cube()->parse->map->map)
-	{
+	{	python3 run_norminette.py
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}
