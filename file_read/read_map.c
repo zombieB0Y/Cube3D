@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:00 by zm                #+#    #+#             */
-/*   Updated: 2025/09/20 05:25:50 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 23:19:18 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 void	add_border(void)
 {
 	int		i;
-	int j;
+	int		j;
+	int		ni;
+	int		nj;
 
 	i = 0;
 	init_new_map();
 	j = 0;
 	while (i < cube()->parse->map->height)
 	{
+		ni = i + 1;
 		j = 0;
 		while ((size_t)j < ft_strlen(cube()->parse->map->map[i]))
 		{
-			cube()->parse->new_map[i + 1][j + 1] = cube()->parse->map->map[i][j];
+			nj = j + 1;
+			cube()->parse->new_map[ni][nj] = cube()->parse->map->map[i][j];
 			j++;
 		}
 		i++;
@@ -63,27 +67,30 @@ void	check_for_valid_map(void)
 	add_border();
 }
 
-void    read_map(void)
+void	read_map(void)
 {
-	bool    valid;
+	bool	valid;
+	int		i;
 
 	get_tmp();
 	valid = false;
 	while (1)
 	{
+		i = cube()->parse->map->height;
 		init_line();
 		if (!cube()->parse->line)
 			break ;
 		if (check_for_whitespace(cube()->parse->line))
 		{
 			valid = true;
-			continue;
+			continue ;
 		}
 		alloc_space(valid);
-		ft_memset(cube()->parse->line + ft_strlen(cube()->parse->line) - 1, '\0', 1);
+		ft_memset(cube()->parse->line + ft_strlen(cube()->parse->line) - 1,
+			'\0', 1);
 		if (cube()->parse->map->width < (int)ft_strlen(cube()->parse->line))
 			cube()->parse->map->width = ft_strlen(cube()->parse->line);
-		cube()->parse->map->map[cube()->parse->map->height] = cube()->parse->line;
+		cube()->parse->map->map[i] = cube()->parse->line;
 		cube()->parse->map->height++;
 	}
 	check_for_valid_map();
@@ -91,9 +98,13 @@ void    read_map(void)
 
 void	print_map(void)
 {
-	int i;
+	int	i;
 
+	i = 0;
 	printf("Map:\n");
-	for (i = 0; i < cube()->parse->map->height + 2; i++)
+	while (i <  cube()->parse->map->height + 2)
+	{
 		printf("%s\n", cube()->parse->map->map[i]);
+		i++;
+	}
 }

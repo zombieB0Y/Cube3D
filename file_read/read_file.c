@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 00:00:00 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 23:24:15 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	load_floor_ceiling_colors(char **split_line)
 	{
 		if (split_line[0][0] == 'F')
 		{
-			cube()->parse->floor_ceiling->floor_color = ft_strjoin(cube()->parse->floor_ceiling->floor_color, split_line[i]);
+			cube()->parse->floor_ceiling->floor_color = ft_strjoin(cube()->parse->floor_ceiling->floor_color, 
+				split_line[i]);
 		}
 		else
 			cube()->parse->floor_ceiling->ceiling_color = ft_strjoin(cube()->parse->floor_ceiling->ceiling_color, split_line[i]);
@@ -50,6 +51,7 @@ void	read_textures_colors(char *file_name)
 	if (cube()->fd < 0)
 	{
 		ft_putstr_fd("Error: Could not open file\n", 2);
+		gc_collect();
 		exit(EXIT_FAILURE);
 	}
 	while (1)

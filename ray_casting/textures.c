@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 19:30:25 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 20:11:46 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:14:42 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_in_image(int x, int start_line, int end_line, int side)
 	t_draw_norm	vars;
 
 	init_draw_vars(&vars, side, start_line);
-	while (vars.pixel < screenHeight - 1)
+	while (vars.pixel < SCREENHEIGHT - 1)
 	{
 		if (vars.pixel >= start_line && vars.pixel <= end_line)
 		{

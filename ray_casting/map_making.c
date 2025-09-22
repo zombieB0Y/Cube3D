@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_making.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 19:30:41 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 21:04:27 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:14:42 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,24 @@ void	create_map(void)
 	float	ray_angle;
 
 	cube()->fov = 60;
-	cube()->distance_to_projection_plan = (((screenHeight) / 2))
+	cube()->distance_to_projection_plan = (((SCREENHEIGHT) / 2))
 	/ (fabs(tan((cube()->fov / 2) * (PI_VALUE / 180))));
 	x = -1;
 	ray_angle = -1;
-	while (++x < screenWidth)
+	while (++x < SCREENWIDTH)
 	{
 		ray_angle = cube()->direction - (cube()->fov / 2) + ((x
-					/ (double)screenWidth) * cube()->fov);
+					/ (double)SCREENWIDTH) * cube()->fov);
 		cube()->walldist = wall_distance(ray_angle);
 		cube()->walldist = ((float)fabs(cube()->walldist * cos((ray_angle
 						- cube()->direction) * (PI_VALUE / 180))));
-		cube()->lineheight = screenWidth / cube()->walldist;
-		cube()->drawstart = (screenHeight / 2) - (cube()->lineheight / 2);
-		cube()->drawend = (screenHeight / 2) + (cube()->lineheight / 2);
+		cube()->lineheight = SCREENWIDTH / cube()->walldist;
+		cube()->drawstart = (SCREENHEIGHT / 2) - (cube()->lineheight / 2);
+		cube()->drawend = (SCREENHEIGHT / 2) + (cube()->lineheight / 2);
 		if (cube()->drawstart < 0)
 			cube()->drawstart = 0;
-		if (cube()->drawend >= screenHeight)
-			cube()->drawend = screenHeight - 1;
+		if (cube()->drawend >= SCREENHEIGHT)
+			cube()->drawend = SCREENHEIGHT - 1;
 		draw_in_image(x, cube()->drawstart, cube()->drawend,
 			cube()->side);
 	}

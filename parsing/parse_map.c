@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:05 by zm                #+#    #+#             */
-/*   Updated: 2025/09/20 06:02:35 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 22:03:04 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	change_space(int X, int Y, int height, int width)
 	cs.point.y = Y;
 	cs.i = 0;
 	cs.directions = gc_malloc(sizeof(t_point) * 4);
-	cs.visited = gc_malloc(sizeof(bool*) * (height));
+	cs.visited = gc_malloc(sizeof(bool *) * (height));
 	if (!cs.directions || !cs.visited)
 		return (0);
 	init_directions(cs.directions);
@@ -68,13 +68,14 @@ int	change_space(int X, int Y, int height, int width)
 
 void	checking_each_char(int i, int j, bool valid)
 {
-	char **map;
+	char	**map;
 
 	map = cube()->parse->map->map;
 	check_for_invalid_char(i, j);
 	if (map[i][j] == '0')
 		validate_surrounding(i, j, valid);
-	else if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' || map[i][j] == 'E')
+	else if (map[i][j] == 'N' || map[i][j] == 'S'
+			|| map[i][j] == 'W' || map[i][j] == 'E')
 	{
 		if (!cube()->parse->map->is_player_there)
 			cube()->parse->map->is_player_there = true;
@@ -94,11 +95,11 @@ void	checking_each_char(int i, int j, bool valid)
 	}
 }
 
-void    map_parsing(void)
+void	map_parsing(void)
 {
-	int     i;
-	int     j;
-	bool    valid;
+	int		i;
+	int		j;
+	bool	valid;
 
 	i = 1;
 	j = 1;
@@ -111,7 +112,7 @@ void    map_parsing(void)
 			if (cube()->parse->map->map[i][j] == 's')
 			{
 				j++;
-				continue;
+				continue ;
 			}
 			checking_each_char(i, j, valid);
 			j++;

@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:00 by zm                #+#    #+#             */
-/*   Updated: 2025/09/20 05:25:50 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 22:49:49 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_line()
 	}
 }
 
-void	expand_map(char **map, int old_height, int old_width)
+void	expand_map(char **map, int old_height)
 {
 		cube()->parse->map->map = ft_realloc(map, sizeof(char *) * (old_height),
 						sizeof(char *) * (old_height + 2));
@@ -67,10 +67,9 @@ void	alloc_space(bool valid)
 	if (!cube()->parse->map->map)
 		cube()->parse->map->map = gc_malloc(sizeof(char *) * 1);
 	else
-		expand_map(cube()->parse->map->map, cube()->parse->map->height,
-			cube()->parse->map->width);
+		expand_map(cube()->parse->map->map, cube()->parse->map->height);
 	if (!cube()->parse->map->map)
-	{	python3 run_norminette.py
+	{
 		gc_collect();
 		exit(EXIT_FAILURE);
 	}

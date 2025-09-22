@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 21:01:14 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 21:01:15 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 21:59:59 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ bool	parse_color(char **tokens, char c)
 	color = gc_malloc(sizeof(t_color));
 	if (!color)
 	{
-
 		ft_putstr_fd("Error: Failed to allocate memory for color\n", 2);
 		gc_collect();
 		exit(EXIT_FAILURE);
@@ -42,9 +41,9 @@ bool	parse_color(char **tokens, char c)
 
 void	check_color_range(t_color *color, char c)
 {
-	if (color->r < 0 || color->r > 255 ||
-		color->g < 0 || color->g > 255 ||
-		color->b < 0 || color->b > 255)
+	if (color->r < 0 || color->r > 255
+		|| color->g < 0 || color->g > 255
+		|| color->b < 0 || color->b > 255)
 	{
 		ft_putstr_fd("Error: Color values must be between 0 and 255\n", 2);
 		gc_collect();

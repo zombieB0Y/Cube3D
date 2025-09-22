@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 21:02:28 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 21:02:29 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:27:41 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,65 +39,53 @@ bool	check_if_valid(char **split_line)
 	return (true);
 }
 
-// can change this fucntion to increment for each texture and color
+void	load(t_texture_type texture, char **split_line)
+{
+	cube()->parse->textures[(int)texture].path = ft_strdup(split_line[1]);
+	cube()->parse->textures[(int)texture].type = texture;
+	cube()->parse->textures[(int)texture].loaded = true;
+}
+
+void	check_for_texture(char **split_line)
+{
+	int		i;
+	char	**symbols;
+
+	i = 0;
+	symbols = load_symbols();
+	while (i < 4)
+	{
+		if (ft_strcmp(split_line[0], symbols[i]) == 0)
+		{
+			if (cube()->parse->textures[i].loaded)
+			{
+				ft_putstr_fd("Error: Texture already loaded\n", 2);
+				gc_collect();
+				exit(EXIT_FAILURE);
+			}
+			else
+				load(i, split_line);
+			break ;
+		}
+		i++;
+	}
+}
+
 void	load_textures_or_colors(char **split_line)
 {
 	ft_memset(split_line[1] + ft_strlen(split_line[1]) - 1, 0, 1);
-	if (ft_strcmp(split_line[0], "NO") == 0)
-	{
-		if (cube()->parse->textures[0].loaded)
-			ft_putstr_fd("Error: Texture already loaded\n", 2);
-		else
-		{
-			cube()->parse->textures[0].path = ft_strdup(split_line[1]);
-			cube()->parse->textures[0].type = TEXTURE_NORTH;
-			cube()->parse->textures[0].loaded = true;
-		}
-	}
-	else if (ft_strcmp(split_line[0], "SO") == 0)
-	{
-		if (cube()->parse->textures[1].loaded)
-			ft_putstr_fd("Error: Texture already loaded\n", 2);
-		else
-		{
-			cube()->parse->textures[1].path = ft_strdup(split_line[1]);
-			cube()->parse->textures[1].type = TEXTURE_SOUTH;
-			cube()->parse->textures[1].loaded = true;
-		}
-	}
-	else if (ft_strcmp(split_line[0], "WE") == 0)
-	{
-		if (cube()->parse->textures[2].loaded)
-			ft_putstr_fd("Error: Texture already loaded\n", 2);
-		else
-		{
-			cube()->parse->textures[2].path = ft_strdup(split_line[1]);
-			cube()->parse->textures[2].type = TEXTURE_WEST;
-			cube()->parse->textures[2].loaded = true;
-		}
-	}
-	else if (ft_strcmp(split_line[0], "EA") == 0)
-	{
-		if (cube()->parse->textures[3].loaded)
-			ft_putstr_fd("Error: Texture already loaded\n", 2);
-		else
-		{
-			cube()->parse->textures[3].path = ft_strdup(split_line[1]);
-			cube()->parse->textures[3].type = TEXTURE_EAST;
-			cube()->parse->textures[3].loaded = true;
-		}
-	}
-	else if (ft_strcmp(split_line[0], "F") == 0)
+	check_for_texture(split_line);
+	if (ft_strcmp(split_line[0], "F") == 0)
 	{
 		if (cube()->parse->floor_ceiling->floor_color_loaded)
-			ft_putstr_fd("Error: Floor color already set\n", 2);
+			error("Error: Floor color already set\n");			
 		else if (cube()->parse->floor_ceiling->floor_color)
 			cube()->parse->floor_ceiling->floor_color_loaded = true;
 	}
 	else if (ft_strcmp(split_line[0], "C") == 0)
 	{
 		if (cube()->parse->floor_ceiling->ceiling_color_loaded)
-			ft_putstr_fd("Error: Ceiling color already set\n", 2);
+			error("Error: Ceiling color already set\n");
 		else if (cube()->parse->floor_ceiling->ceiling_color)
 			cube()->parse->floor_ceiling->ceiling_color_loaded = true;
 	}

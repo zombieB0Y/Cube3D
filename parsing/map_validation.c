@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:00 by zm                #+#    #+#             */
-/*   Updated: 2025/09/20 05:25:50 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 22:04:15 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	itiraite_foward(char **map, int i, int j)
 {
-	int width;
+	int	width;
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
@@ -26,7 +26,7 @@ bool	itiraite_foward(char **map, int i, int j)
 
 bool	itiraite_backward(char **map, int i, int j)
 {
-	int width;
+	int	width;
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
@@ -38,7 +38,7 @@ bool	itiraite_backward(char **map, int i, int j)
 
 bool	itiraite_upward(char **map, int i, int j)
 {
-	int width;
+	int	width;
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
@@ -50,7 +50,7 @@ bool	itiraite_upward(char **map, int i, int j)
 
 bool	itiraite_downward(char **map, int i, int j)
 {
-	int width;
+	int	width;
 
 	width = ft_strlen(map[i]);
 	if (i < 0 || i > cube()->parse->map->height || j < 0 || j > width)
@@ -62,8 +62,8 @@ bool	itiraite_downward(char **map, int i, int j)
 
 bool	check_surrounding(char **map, int i, int j)
 {
-	if (itiraite_foward(map, i, j) && itiraite_backward(map, i, j) &&
-		itiraite_upward(map, i, j) && itiraite_downward(map, i, j))
+	if (itiraite_foward(map, i, j) && itiraite_backward(map, i, j)
+		&& itiraite_upward(map, i, j) && itiraite_downward(map, i, j))
 		return (true);
 	else
 		return (false);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 20:08:38 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 20:39:45 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:14:42 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_draw_vars(t_draw_norm *vars, int side, int start_line)
 	vars->wallx -= floor(vars->wallx);
 	vars->texx = (vars->wallx * (double)vars->texture->width);
 	vars->step = vars->texture->height / cube()->lineheight;
-	vars->texpos = (start_line - screenHeight / 2 + cube()->lineheight / 2)
+	vars->texpos = (start_line - SCREENHEIGHT / 2 + cube()->lineheight / 2)
 		* vars->step;
 }
 
@@ -58,10 +58,10 @@ void	init_textures(void)
 	while (i < 4)
 	{
 		cube()->parse->textures[i].img = mlx_xpm_file_to_image
-			(cube()->cube_map->mlx,
-			cube()->parse->textures[i].path,
-			&cube()->parse->textures[i].width,
-			&cube()->parse->textures[i].height);
+		(cube()->cube_map->mlx,
+		cube()->parse->textures[i].path,
+		&cube()->parse->textures[i].width,
+		&cube()->parse->textures[i].height);
 		if (!cube()->parse->textures[i].img)
 		{
 			printf("Failed to load texture %d\n", i);

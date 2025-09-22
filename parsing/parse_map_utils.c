@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 21:01:07 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 21:01:08 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 21:58:45 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_for_invalid_char(int i, int j)
 
 void	validate_surrounding(int i, int j, bool valid)
 {
-	char **map;
+	char	**map;
 
 	map = cube()->parse->map->map;
 	valid = check_surrounding(map, i, j);

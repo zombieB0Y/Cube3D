@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:00 by zm                #+#    #+#             */
-/*   Updated: 2025/09/20 05:25:50 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/22 23:24:46 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	size_2d(char **arr)
 {
-	int i;
+	int	i;
 
 	if (!arr)
 		return (0);
@@ -26,7 +26,7 @@ int	size_2d(char **arr)
 
 void	checking_split_line(char **split_line)
 {
-	if (!split_line)
+	if (!split_line || !split_line[1])
 	{
 		gc_collect();
 		exit(EXIT_FAILURE);
@@ -46,4 +46,22 @@ void	checking_split_line(char **split_line)
 		exit(EXIT_FAILURE);
 	}
 	load_textures_or_colors(split_line);
+}
+
+char	**load_symbols(void)
+{
+	char	**symbols;
+
+	symbols = gc_malloc(sizeof(char *) * 5);
+	if (!symbols)
+	{
+		gc_collect();
+		exit(EXIT_FAILURE);
+	}
+	symbols[0] = "NO";
+	symbols[1] = "SO";
+	symbols[2] = "WE";
+	symbols[3] = "EA";
+	symbols[4] = NULL;
+	return (symbols);
 }

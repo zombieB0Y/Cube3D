@@ -24,8 +24,8 @@
 # include "get_line/get_line.h"
 
 # define WIN "Cube_3D"
-# define screenWidth 1300
-# define screenHeight 900
+# define SCREENWIDTH 1300
+# define SCREENHEIGHT 900
 # define UPKEY 65362
 # define DOWNKEY 65364
 # define LEFTKEY 65361
@@ -54,7 +54,7 @@ typedef enum e_texture_type
 	TEXTURE_SOUTH,
 	TEXTURE_WEST,
 	TEXTURE_EAST
-} t_texture_type;
+}	t_texture_type;
 
 typedef struct s_color
 {
@@ -200,77 +200,79 @@ typedef struct s_draw_norm
 }	t_draw_norm;
 
 // Memory management functions
-void gc_register(void *ptr);
-void *gc_malloc(size_t size);
-void gc_collect(void);
+void	gc_register(void *ptr);
+void	*gc_malloc(size_t size);
+void	gc_collect(void);
 
 // Utility functions
-size_t ft_strlen(const char *s);
-int ft_strcmp(const char *s1, const char *s2);
-void ft_putstr_fd(char *s, int fd);
-void *ft_memcpy(void *dst, const void *src, size_t n);
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
-char *ft_strdup(const char *s1);
-void *ft_memset(void *s, int c, size_t n);
-bool ft_isspace(char c);
-int ft_strncmp(const char *s1, const char *s2, size_t n);
-int gcd(int a, int b);
-char **ft_split(char const *s, char c);
-int ft_atoi(const char *str);
-int ft_isdigit(int c);
-char **ft_split1(char *s, char c);
-char *ft_strchr(const char *s, int c);
-void *ft_calloc(size_t count, size_t size);
+size_t	ft_strlen(const char *s);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_putstr_fd(char *s, int fd);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+char	*ft_strdup(const char *s1);
+void	*ft_memset(void *s, int c, size_t n);
+bool	ft_isspace(char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		gcd(int a, int b);
+char	**ft_split(char const *s, char c);
+int		ft_atoi(const char *str);
+int		ft_isdigit(int c);
+char	**ft_split1(char *s, char c);
+char	*ft_strchr(const char *s, int c);
+void	*ft_calloc(size_t count, size_t size);
 
 // Argument validation
-int validate_args(int ac, char **av);
+int		validate_args(int ac, char **av);
 // File reading
-bool check_for_whitespace(char *line);
-void read_file(char *file_name);
-void read_textures_colors(char *file_name);
-void check_textures(void);
-bool check_for_valid_texture(void);
-bool check_each_texture(int id);
-bool check_if_valid(char **split_line);
-void load_textures_or_colors(char **split_line);
-void print_textures_colors(void);
-void read_map(void);
-void print_map(void);
-void load_floor_ceiling_colors(char **split_line);
-bool is_it_loaded(void);
-void init_parse(void);
+bool	check_for_whitespace(char *line);
+void	read_file(char *file_name);
+void	read_textures_colors(char *file_name);
+void	check_textures(void);
+bool	check_for_valid_texture(void);
+bool	check_each_texture(int id);
+bool	check_if_valid(char **split_line);
+void	load_textures_or_colors(char **split_line);
+void	print_textures_colors(void);
+void	read_map(void);
+void	print_map(void);
+void	load_floor_ceiling_colors(char **split_line);
+bool	is_it_loaded(void);
+void	init_parse(void);
 
 // File utilities
-int size_2d(char **arr);
-void checking_split_line(char **split_line);
+int		size_2d(char **arr);
+void	checking_split_line(char **split_line);
+char	**load_symbols(void);
+void	error(char *msg);
 
 // Map utilities
-void init_new_map(void);
-void init_line(void);
-void alloc_space(bool valid);
-void add_border(void);
-char *get_tmp(void);
-void check_for_valid_map(void);
+void	init_new_map(void);
+void	init_line(void);
+void	alloc_space(bool valid);
+void	add_border(void);
+char	*get_tmp(void);
+void	check_for_valid_map(void);
 
 // Map validation
-bool itiraite_foward(char **map, int i, int j);
-bool itiraite_backward(char **map, int i, int j);
-bool itiraite_upward(char **map, int i, int j);
-bool itiraite_downward(char **map, int i, int j);
-bool check_surrounding(char **map, int i, int j);
+bool	itiraite_foward(char **map, int i, int j);
+bool	itiraite_backward(char **map, int i, int j);
+bool	itiraite_upward(char **map, int i, int j);
+bool	itiraite_downward(char **map, int i, int j);
+bool	check_surrounding(char **map, int i, int j);
 
 // Queue utilities
-int init_queue(t_queue *q, int capacity);
-void add_in_queue(t_queue *q, t_point point);
-t_point out_of_queue(t_queue *q);
-int is_empty(t_queue *q);
+int		init_queue(t_queue *q, int capacity);
+void	add_in_queue(t_queue *q, t_point point);
+t_point	out_of_queue(t_queue *q);
+int		is_empty(t_queue *q);
 
 // Parsing functions
-void parse_textures(void);
-bool parse_color(char **tokens, char c);
-void check_color_range(t_color *color, char c);
-void map_parsing(void);
-int change_space(int X, int Y, int height, int width);
+void	parse_textures(void);
+bool	parse_color(char **tokens, char c);
+void	check_color_range(t_color *color, char c);
+void	map_parsing(void);
+int		change_space(int X, int Y, int height, int width);
 long	convert_rgb(char c);
 void	check_player(void);
 void	init_directions(t_point *directions);
@@ -285,17 +287,17 @@ int		draw_world(void);
 void	draw_in_image(int x, int start_line, int end_line, int side);
 
 // herrek
-int key_hook(int keycode);
-void mv(int keycode, float *direction_move);
+int		key_hook(int keycode);
+void	mv(int keycode, float *direction_move);
 
-int	is_player(char player, int posx, int posy);
+int		is_player(char player, int posx, int posy);
 void	give_me_map(void);
 
 float	wall_distance(float ray_angle);
-int	is_wall(char **map, int x, int y);
+int		is_wall(char **map, int x, int y);
 
-int	destroy_window_helper(int code);
-int	destroy_window(void);
+int		destroy_window_helper(int code);
+int		destroy_window(void);
 void	destroy_texture(void);
 
 void	ft_mlx_new_image(void);
@@ -305,8 +307,8 @@ void	ft_mlx_new_window(void);
 
 void	init_textures(void);
 void	init_texture_addresses(void);
-int	get_texture_index(int side, float raydirx, float raydiry);
-int	get_texture_pixel(t_texture *texture, int x, int y);
+int		get_texture_index(int side, float raydirx, float raydiry);
+int		get_texture_pixel(t_texture *texture, int x, int y);
 void	init_draw_vars(t_draw_norm *vars, int side, int start_line);
 void	get_texture_color(t_draw_norm *vars, int side);
 void	floor_or_ceiling(t_draw_norm vars, int x, int start_line, int end_line);

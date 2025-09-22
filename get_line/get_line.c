@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:48:28 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/07/17 14:10:50 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:10:46 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = fill_line(&buff, line, fd);
 	if (!line)
-    	return (NULL);
+		return (NULL);
 	return (line);
 }

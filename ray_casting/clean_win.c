@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_win.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 21:00:22 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/20 21:00:58 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/09/22 23:13:12 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ int	destroy_window(void)
 	exit(0);
 }
 
-void	destroy_texture()
+void	destroy_texture(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
 	{
-		mlx_destroy_image(cube()->cube_map->mlx, cube()->parse->textures[i].img);
+		mlx_destroy_image(cube()->cube_map->mlx,
+			cube()->parse->textures[i].img);
 		i++;
 	}
 }
