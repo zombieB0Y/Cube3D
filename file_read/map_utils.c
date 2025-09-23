@@ -12,9 +12,9 @@
 
 #include "../cube.h"
 
-void	init_new_map(void)
+void init_new_map(void)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	cube()->parse->new_map = gc_malloc(sizeof(char *) * (cube()->parse->map->height + 3));
@@ -24,21 +24,21 @@ void	init_new_map(void)
 		exit(EXIT_FAILURE);
 	}
 	while (i < cube()->parse->map->height + 2)
-    {
-        cube()->parse->new_map[i] = gc_malloc(sizeof(char) * (cube()->parse->map->width + 3));
-        if (!cube()->parse->new_map[i])
-        {
-            gc_collect();
-            exit(EXIT_FAILURE);
-        }
-        ft_memset(cube()->parse->new_map[i], ' ', cube()->parse->map->width + 2);
-        cube()->parse->new_map[i][cube()->parse->map->width + 2] = '\0';
-        i++;
-    }
+	{
+		cube()->parse->new_map[i] = gc_malloc(sizeof(char) * (cube()->parse->map->width + 3));
+		if (!cube()->parse->new_map[i])
+		{
+			gc_collect();
+			exit(EXIT_FAILURE);
+		}
+		ft_memset(cube()->parse->new_map[i], ' ', cube()->parse->map->width + 2);
+		cube()->parse->new_map[i][cube()->parse->map->width + 2] = '\0';
+		i++;
+	}
 	cube()->parse->new_map[i] = NULL;
 }
 
-void	init_line()
+void init_line()
 {
 
 	if (!cube()->parse->tmp)
@@ -50,13 +50,19 @@ void	init_line()
 	}
 }
 
-void	expand_map(char **map, int old_height)
+void expand_map(char **map, int old_height)
 {
-		cube()->parse->map->map = ft_realloc(map, sizeof(char *) * (old_height),
-						sizeof(char *) * (old_height + 2));
+	size_t old_size;
+	size_t new_size;
+	void *new_map;
+
+	old_size = sizeof(char *) * (old_height);
+	new_size = sizeof(char *) * (old_height + 2);
+	new_map = ft_realloc(map, old_size , new_size );
+	cube()->parse->map->map = new_map;
 }
 
-void	alloc_space(bool valid)
+void alloc_space(bool valid)
 {
 	if (valid)
 	{
