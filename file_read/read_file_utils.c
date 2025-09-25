@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 21:02:28 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/22 23:27:41 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/23 21:52:16 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	load_textures_or_colors(char **split_line)
 	if (ft_strcmp(split_line[0], "F") == 0)
 	{
 		if (cube()->parse->floor_ceiling->floor_color_loaded)
-			error("Error: Floor color already set\n");			
+			error("Error: Floor color already set\n");
 		else if (cube()->parse->floor_ceiling->floor_color)
 			cube()->parse->floor_ceiling->floor_color_loaded = true;
 	}

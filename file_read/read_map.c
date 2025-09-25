@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 00:00:00 by zm                #+#    #+#             */
-/*   Updated: 2025/09/22 23:19:18 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/25 01:51:13 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	print_map(void)
 
 	i = 0;
 	printf("Map:\n");
-	while (i <  cube()->parse->map->height + 2)
+	while (i < cube()->parse->map->height + 2)
 	{
 		printf("%s\n", cube()->parse->map->map[i]);
 		i++;

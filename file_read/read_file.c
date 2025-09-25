@@ -6,21 +6,20 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:26:20 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/22 23:24:15 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/25 01:55:05 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void load_floor_ceiling_colors(char **split_line)
+void	load_floor_ceiling_colors(char **split_line)
 {
-	int i;
-	char *flor_color;
-	char *celling_color;
+	int		i;
+	char	*flor_color;
+	char	*celling_color;
 
 	celling_color = cube()->parse->floor_ceiling->ceiling_color;
 	flor_color = cube()->parse->floor_ceiling->floor_color;
-
 	i = 1;
 	while (split_line[i])
 	{
@@ -32,28 +31,28 @@ void load_floor_ceiling_colors(char **split_line)
 		else
 		{
 			celling_color = ft_strjoin(celling_color, split_line[i]);
-			cube()->parse->floor_ceiling->ceiling_color =celling_color;
+			cube()->parse->floor_ceiling->ceiling_color = celling_color;
 		}
 		i++;
 	}
 }
 
-bool is_it_loaded(void)
+bool	is_it_loaded(void)
 {
-	if (cube()->parse->textures[0].loaded &&
-		cube()->parse->textures[1].loaded &&
-		cube()->parse->textures[2].loaded &&
-		cube()->parse->textures[3].loaded &&
-		cube()->parse->floor_ceiling->floor_color_loaded &&
-		cube()->parse->floor_ceiling->ceiling_color_loaded)
+	if (cube()->parse->textures[0].loaded
+		&& cube()->parse->textures[1].loaded
+		&& cube()->parse->textures[2].loaded
+		&& cube()->parse->textures[3].loaded
+		&& cube()->parse->floor_ceiling->floor_color_loaded
+		&& cube()->parse->floor_ceiling->ceiling_color_loaded)
 		return (true);
 	return (false);
 }
 
-void read_textures_colors(char *file_name)
+void	read_textures_colors(char *file_name)
 {
-	char *line;
-	char **split_line;
+	char	*line;
+	char	**split_line;
 
 	cube()->fd = open(file_name, O_RDONLY);
 	if (cube()->fd < 0)
@@ -65,18 +64,18 @@ void read_textures_colors(char *file_name)
 	while (1)
 	{
 		if (is_it_loaded())
-			break;
+			break ;
 		line = get_next_line(cube()->fd);
 		if (!line)
-			break;
+			break ;
 		if (check_for_whitespace(line))
-			continue;
+			continue ;
 		split_line = ft_split(line, ' ');
 		checking_split_line(split_line);
 	}
 }
 
-void init_parse(void)
+void	init_parse(void)
 {
 	cube()->parse = gc_malloc(sizeof(t_parse));
 	if (!cube()->parse)
@@ -96,16 +95,16 @@ void init_parse(void)
 	ft_memset(cube()->parse->floor_ceiling, 0, sizeof(t_floor_ceiling));
 }
 
-void read_file(char *file_name)
+void	read_file(char *file_name)
 {
 	init_parse();
 	read_textures_colors(file_name);
-	if (!cube()->parse->textures[0].loaded ||
-		!cube()->parse->textures[1].loaded ||
-		!cube()->parse->textures[2].loaded ||
-		!cube()->parse->textures[3].loaded ||
-		!cube()->parse->floor_ceiling->floor_color_loaded ||
-		!cube()->parse->floor_ceiling->ceiling_color_loaded)
+	if (!cube()->parse->textures[0].loaded
+		|| !cube()->parse->textures[1].loaded
+		|| !cube()->parse->textures[2].loaded
+		|| !cube()->parse->textures[3].loaded
+		|| !cube()->parse->floor_ceiling->floor_color_loaded
+		|| !cube()->parse->floor_ceiling->ceiling_color_loaded)
 	{
 		gc_collect();
 		exit(EXIT_FAILURE);
