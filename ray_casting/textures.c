@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 19:30:25 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/22 23:14:42 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/25 19:18:25 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	get_texture_color(t_draw_norm *vars, int side)
 {
 	if (vars->texture->addr)
 	{
-		vars->texy = abs((int)vars->texpos) % vars->texture->height;
+		vars->texy = (int)vars->texpos % vars->texture->height;
 		vars->texpos += vars->step;
 		vars->color = get_texture_pixel(vars->texture, vars->texx, vars->texy);
 	}
