@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mlx.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ibennaje <ibennaje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/20 21:00:15 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/22 23:14:42 by zm               ###   ########.fr       */
+/*   Created: 2025/09/25 10:06:36 by ibennaje          #+#    #+#             */
+/*   Updated: 2025/09/25 10:06:40 by ibennaje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,20 @@ void	ft_mlx_new_window(void)
 	mlx = cube()->cube_map->mlx;
 	mlx_win = mlx_new_window(mlx, SCREENWIDTH, SCREENHEIGHT, WIN);
 	cube()->cube_map->mlx_win = mlx_win;
+}
+
+void	ft_mlx_xpm_file_to_image(int i)
+{
+	void	*img;
+	char	*path;
+	void	*mlx;
+	int		*width;
+	int		*height;
+
+	mlx = cube()->cube_map->mlx;
+	path = cube()->parse->textures[i].path;
+	width = &cube()->parse->textures[i].width;
+	height = &cube()->parse->textures[i].height;
+	img = mlx_xpm_file_to_image(mlx, path, width, height);
+	cube()->parse->textures[i].img = img;
 }

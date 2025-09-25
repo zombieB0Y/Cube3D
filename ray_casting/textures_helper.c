@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: ibennaje <ibennaje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 20:08:38 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/25 02:14:40 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/25 10:11:18 by ibennaje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,31 @@ void	init_draw_vars(t_draw_norm *vars, int side, int start_line)
 		* vars->step;
 }
 
+static void	init_texture_addresses_helper(int i, void *img)
+{
+	int		*bpp;
+	int		*line_length;
+	int		*endian;
+	char	*textures_addr;
+
+	bpp = &cube()->parse->textures[i].bits_per_pixel;
+	line_length = &cube()->parse->textures[i].line_length;
+	endian = &cube()->parse->textures[i].endian;
+	textures_addr = mlx_get_data_addr(img, bpp, line_length, endian);
+	cube()->parse->textures[i].addr = textures_addr;
+}
+
 void	init_texture_addresses(void)
 {
-	int	i;
-	int	*bits_per_pixel;
-	int	*line_length;
-	int	*endian;
+	int		i;
+	void	*img;
 
 	i = 0;
+	img = cube()->parse->textures[i].img;
 	while (i < 4)
 	{
 		if (cube()->parse->textures[i].img)
-		{
-			bits_per_pixel = &cube()->parse->textures[i].bits_per_pixel;
-			line_length = &cube()->parse->textures[i].line_length;
-			endian = &cube()->parse->textures[i].endian;
-			cube()->parse->textures[i].addr = mlx_get_data_addr(cube()->parse->textures[i].img,
-				bits_per_pixel, line_length, endian);
-		}
+			init_texture_addresses_helper(i, img);
 		else
 			cube()->parse->textures[i].addr = NULL;
 		i++;
@@ -55,13 +62,12 @@ void	init_texture_addresses(void)
 
 void	init_textures(void)
 {
-	int (i) = 0;
+	int	i;
+
+	i = 0;
 	while (i < 4)
 	{
-		cube()->parse->textures[i].img = mlx_xpm_file_to_image(cube()->cube_map->mlx,
-			cube()->parse->textures[i].path,
-			&cube()->parse->textures[i].width,
-			&cube()->parse->textures[i].height);
+		ft_mlx_xpm_file_to_image(i);
 		if (!cube()->parse->textures[i].img)
 		{
 			printf("Failed to load texture %d\n", i);

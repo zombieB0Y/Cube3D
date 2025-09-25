@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*																			*/
 /*														:::	  ::::::::   */
-/*   cube.h											 :+:	  :+:	:+:   */
+/*   cube.h                                             :+:      :+:    :+:   */
 /*													+:+ +:+		 +:+	 */
 /*   By: zoentifi <zoentifi@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2025/06/29 15:03:14 by zoentifi		  #+#	#+#			 */
-/*   Updated: 2025/09/20 20:22:56 by zoentifi		 ###   ########.fr	   */
+/*   Updated: 2025/09/25 10:05:36 by ibennaje         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -304,6 +304,7 @@ void	ft_mlx_new_image(void);
 void	ft_mlx_get_data_addr(void);
 void	ft_mlx_put_image_to_window(void);
 void	ft_mlx_new_window(void);
+void	ft_mlx_xpm_file_to_image(int i);
 
 void	init_textures(void);
 void	init_texture_addresses(void);
