@@ -6,7 +6,7 @@
 /*   By: ibennaje <ibennaje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:07:21 by ibennaje          #+#    #+#             */
-/*   Updated: 2025/09/25 10:07:26 by ibennaje         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:51:47 by ibennaje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,13 @@ void	give_me_map(void)
 int	is_wall(char **map, int x, int y)
 {
 	return (map[y][x] == '1');
+}
+
+float	wall_distance_formula(float ray_angle)
+{
+	float	wall_dist;
+
+	wall_dist = ((float)fabs(cube()->walldist * cos((ray_angle
+						- cube()->direction) * (PI_VALUE / 180))));
+	return (wall_dist);
 }

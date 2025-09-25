@@ -6,7 +6,7 @@
 /*   By: ibennaje <ibennaje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 10:06:54 by ibennaje          #+#    #+#             */
-/*   Updated: 2025/09/25 10:06:56 by ibennaje         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:49:37 by ibennaje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ void	create_map(void)
 		ray_angle = cube()->direction - (cube()->fov / 2) + ((x
 					/ (double)SCREENWIDTH) * cube()->fov);
 		cube()->walldist = wall_distance(ray_angle);
-		cube()->walldist = ((float)fabs(cube()->walldist * cos((ray_angle
-						- cube()->direction) * (PI_VALUE / 180))));
-		cube()->lineheight = SCREENWIDTH / cube()->walldist;
+		cube()->lineheight = SCREENWIDTH / wall_distance_formula(ray_angle);
 		cube()->drawstart = (SCREENHEIGHT / 2) - (cube()->lineheight / 2);
 		cube()->drawend = (SCREENHEIGHT / 2) + (cube()->lineheight / 2);
 		if (cube()->drawstart < 0)

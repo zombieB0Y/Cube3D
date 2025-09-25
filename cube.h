@@ -313,5 +313,5 @@ int		get_texture_pixel(t_texture *texture, int x, int y);
 void	init_draw_vars(t_draw_norm *vars, int side, int start_line);
 void	get_texture_color(t_draw_norm *vars, int side);
 void	floor_or_ceiling(t_draw_norm vars, int x, int start_line, int end_line);
-
+float	wall_distance_formula(float ray_angle);
 #endif
