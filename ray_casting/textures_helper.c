@@ -6,7 +6,7 @@
 /*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 20:08:38 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/09/25 19:23:48 by zm               ###   ########.fr       */
+/*   Updated: 2025/09/26 18:08:52 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,31 @@ void	init_draw_vars(t_draw_norm *vars, int side, int start_line)
 		* vars->step;
 }
 
-static void	init_texture_addresses_helper(int i, void *img)
+static void	init_texture_addresses_helper(int i)
 {
+	char	*texture_addr;
+	void	*img;
 	int		*bpp;
 	int		*line_length;
 	int		*endian;
-	char	*textures_addr;
 
+	img = cube()->parse->textures[i].img;
 	bpp = &cube()->parse->textures[i].bits_per_pixel;
 	line_length = &cube()->parse->textures[i].line_length;
 	endian = &cube()->parse->textures[i].endian;
-	textures_addr = mlx_get_data_addr(img, bpp, line_length, endian);
-	cube()->parse->textures[i].addr = textures_addr;
+	texture_addr = mlx_get_data_addr(img, bpp, line_length, endian);
+	cube()->parse->textures[i].addr = texture_addr;
 }
 
 void	init_texture_addresses(void)
 {
-	int		i;
-	void	*img;
+	int	i;
 
 	i = 0;
-	img = cube()->parse->textures[i].img;
 	while (i < 4)
 	{
 		if (cube()->parse->textures[i].img)
-			init_texture_addresses_helper(i, img);
+			init_texture_addresses_helper(i);
 		else
 			cube()->parse->textures[i].addr = NULL;
 		i++;

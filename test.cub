@@ -1,17 +1,14 @@
-C 135,206,235
-
+C 207,236,247   
 
 NO textures/wall1.xpm
-SO textures/wall2.xpm
-WE textures/tile_007.xpm
-EA textures/tile_007.xpm
+SO textures/wall1.xpm
+WE textures/wall2.xpm
+EA textures/wall2.xpm
 
 
 
 
-F   125 ,1   , 255
-
-
+F 139,90,43
                    1                                                   1
                   101                                                 101
                  100011                                              10001
