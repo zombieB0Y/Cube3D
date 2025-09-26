@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
+MLX_FLAGS =  -lmlx  -lXext -lX11 -lm
 
 SRCS = cube.c gc.c $(UTILES) $(ARGS_VALIDAT) $(FILE_READ)
 
